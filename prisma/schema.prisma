@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PatternCategory {
+  id       Int       @id @default(autoincrement())
+  patterns Pattern[]
+  name     String    @unique
+}
+
+model Pattern {
+  id                Int              @id @default(autoincrement())
+  name              String
+  description       String?          @unique
+  score             String           @unique
+  themeId           Int?
+  patternCategoryId Int?
+  goalTempo         Int?
+  startTempo        Int?
+  bestTempo         Int?
+  difficulty        Int?
+  records           Record[]
+  Theme             Theme?           @relation(fields: [themeId], references: [id])
+  Category          PatternCategory? @relation(fields: [patternCategoryId], references: [id])
+}
+
+model Theme {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  category    String
+  patterns    Pattern[]
+}
+
+model Record {
+  id        Int      @id @default(autoincrement())
+  tempo     Int
+  rating    Int
+  patternId Int
+  Pattern   Pattern  @relation(fields: [patternId], references: [id])
+  createdAt DateTime @default(now()) @map("date")
+}
