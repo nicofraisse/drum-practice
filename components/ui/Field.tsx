@@ -1,0 +1,25 @@
+import classNames from 'classnames'
+import { Field as FormikField, Form as FormikForm, Formik } from 'formik'
+import { capitalize } from 'lodash'
+import { createContext } from 'react'
+import Input from './Input'
+
+const Field = ({ name, type = 'text', className, control, ...props }) => {
+  return (
+    <FormikField name={name}>
+      {({ field }) => {
+        return (
+          <div className={classNames(className, 'mb-2')}>
+            <label htmlFor={name} className="block">
+              {capitalize(name)}
+            </label>
+
+            {control || <Input type={type} id={name} {...field} {...props} />}
+          </div>
+        )
+      }}
+    </FormikField>
+  )
+}
+
+export default Field

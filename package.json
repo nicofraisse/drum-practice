@@ -22,13 +22,16 @@
     "graphql": "^15.6.0",
     "graphql-scalars": "^1.10.1",
     "graphql-tag": "^2.12.5",
+    "i": "^0.3.7",
     "micro": "^9.3.4",
     "micro-cors": "^0.1.1",
     "next": "11.1.2",
     "nexus": "^1.1.0",
+    "npm": "^7.24.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-feather": "^2.0.9"
+    "react-feather": "^2.0.9",
+    "react-toastify": "^8.0.3"
   },
   "devDependencies": {
     "@types/graphql": "^14.5.0",

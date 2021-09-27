@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import Button from 'components/ui/Button'
-import { Field, Form } from 'components/ui/Form'
+import { Form } from 'components/ui/Form'
+import Field from 'components/ui/Field'
 import gql from 'graphql-tag'
 import { X } from 'react-feather'
 
@@ -87,8 +88,18 @@ export default function Home() {
       >
         {() => (
           <>
-            <Field type="text" placeholder="Enter here" name="name" inline />
-            <Field type="text" placeholder="Enter here" name="score" inline />
+            <Field
+              type="text"
+              placeholder="Enter here"
+              name="name"
+              className={3}
+            />
+            <Field
+              type="textarea"
+              placeholder="Enter here"
+              name="description"
+            />
+            <Field type="text" placeholder="Enter here" name="score" />
             <Button>Submit</Button>
           </>
         )}
