@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
 import Button from 'components/ui/Button'
-import { Form } from 'components/ui/Form'
 import Field from 'components/ui/Field'
+import { Form } from 'components/ui/Form'
 import gql from 'graphql-tag'
+import Link from 'next/link'
 import { X } from 'react-feather'
-import Link from 'next/Link'
 
 const patternsQuery = gql`
   query PatternsQuery {

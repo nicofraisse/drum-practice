@@ -1,9 +1,9 @@
-import React from 'react'
 import { useQuery } from '@apollo/client'
+import Card from 'components/Card'
+import Tempo from 'components/Tempo'
 import gql from 'graphql-tag'
 import { useRouter } from 'next/router'
-import Tempo from 'components/Tempo'
-import Card from 'components/Card'
+import React from 'react'
 
 const patternsQuery = gql`
   query PatternQuery($id: String!) {
@@ -16,7 +16,7 @@ const patternsQuery = gql`
   }
 `
 
-const pattern = () => {
+const Pattern = () => {
   const id = useRouter().query.id
 
   const { data, loading } = useQuery(patternsQuery, {
@@ -32,7 +32,10 @@ const pattern = () => {
         <p className="text-gray-600 mb-2">{data.pattern.description}</p>
         <div className="flex flex-wrap">
           {[...data.pattern.score].map((x) => (
-            <div className="w-8 h-8 mr-2 rounded bg-red-100 flex items-center justify-center">
+            <div
+              key={Math.random()}
+              className="w-8 h-8 mr-2 rounded bg-red-100 flex items-center justify-center"
+            >
               {x}
             </div>
           ))}
@@ -45,4 +48,4 @@ const pattern = () => {
   )
 }
 
-export default pattern
+export default Pattern

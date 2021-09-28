@@ -1,11 +1,9 @@
-import { useState } from 'react'
-import { PlusCircle, MinusCircle } from 'react-feather'
 import classNames from 'classnames'
 import { useTempo } from 'lib/tempo'
+import { MinusCircle, PlusCircle } from 'react-feather'
 
 const Decrease = () => {
   const { tempo, decreaseTempo } = useTempo()
-  console.log('tempo', tempo)
   return (
     <button
       className={classNames({

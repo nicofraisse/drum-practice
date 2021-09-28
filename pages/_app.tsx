@@ -1,10 +1,11 @@
 import '../styles/globals.css'
-import Layout from 'components/Layout'
-import { ToastContainer } from 'react-toastify'
+
 import { ApolloProvider } from '@apollo/client'
+import Layout from 'components/Layout'
 import apolloClient from 'lib/apolloClient'
-import type { AppProps } from 'next/app'
 import TempoProvider from 'lib/tempo'
+import type { AppProps } from 'next/app'
+import { ToastContainer } from 'react-toastify'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
