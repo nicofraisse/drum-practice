@@ -20,5 +20,6 @@ type Pattern {
 }
 
 type Query {
+  pattern(id: String!): Pattern
   patterns: [Pattern]
 }

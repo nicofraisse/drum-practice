@@ -1,5 +1,5 @@
 import prisma from 'lib/prisma'
-import { objectType } from 'nexus'
+import { nonNull, objectType, stringArg } from 'nexus'
 
 const Queries = objectType({
   name: 'Query',
@@ -8,6 +8,17 @@ const Queries = objectType({
       type: 'Pattern',
       resolve: () => {
         return prisma.pattern.findMany({})
+      }
+    })
+    t.field('pattern', {
+      type: 'Pattern',
+      args: { id: nonNull(stringArg()) },
+      resolve: (_, args) => {
+        return prisma.pattern.findUnique({
+          where: {
+            id: Number(args.id)
+          }
+        })
       }
     })
   }

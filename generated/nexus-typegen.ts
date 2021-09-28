@@ -75,6 +75,7 @@ export interface NexusGenFieldTypes {
     score: string | null; // String
   }
   Query: { // field return type
+    pattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     patterns: Array<NexusGenRootTypes['Pattern'] | null> | null; // [Pattern]
   }
 }
@@ -91,6 +92,7 @@ export interface NexusGenFieldTypeNames {
     score: 'String'
   }
   Query: { // field return type name
+    pattern: 'Pattern'
     patterns: 'Pattern'
   }
 }
@@ -104,6 +106,11 @@ export interface NexusGenArgTypes {
     }
     deletePattern: { // args
       patternId: number; // Int!
+    }
+  }
+  Query: {
+    pattern: { // args
+      id: string; // String!
     }
   }
 }

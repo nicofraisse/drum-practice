@@ -1,7 +1,6 @@
 import classNames from 'classnames'
-import { Field as FormikField, Form as FormikForm, Formik } from 'formik'
+import { Field as FormikField } from 'formik'
 import { capitalize } from 'lodash'
-import { createContext } from 'react'
 import Input from './Input'
 
 const Field = ({ name, type = 'text', className, control, ...props }) => {
