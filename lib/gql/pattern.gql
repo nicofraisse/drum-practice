@@ -3,6 +3,7 @@ query GET_PATTERNS {
     id
     name
     score
+    bestTempo
   }
 }
 query GET_PATTERN($id: String!) {
@@ -11,6 +12,7 @@ query GET_PATTERN($id: String!) {
     name
     description
     score
+    bestTempo
   }
 }
 
@@ -20,7 +22,13 @@ mutation CREATE_PATTERN($name: String!, $score: String!, $description: String) {
   }
 }
 
-mutation DELETE_PATTERN($patternId: Int!) {
+mutation UPDATE_PATTERN_BEST_TEMPO($id: String!, $tempo: Int!) {
+  updatePattern(id: $id, tempo: $tempo) {
+    id
+  }
+}
+
+mutation DELETE_PATTERN($patternId: String!) {
   deletePattern(patternId: $patternId) {
     id
   }

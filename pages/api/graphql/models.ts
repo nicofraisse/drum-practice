@@ -8,6 +8,7 @@ const Pattern = objectType({
     t.string('name')
     t.string('description')
     t.string('score')
+    t.int('bestTempo')
   }
 })
 

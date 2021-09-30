@@ -10,11 +10,13 @@ scalar DateTime
 type Mutation {
   createPattern(description: String, name: String!, score: String!): Pattern
   createRecord(patternId: String!, rating: Int!, tempo: Int!): Record
-  deletePattern(patternId: Int!): Pattern
+  deletePattern(patternId: String!): Pattern
   deleteRecord(recordId: Int!): Record
+  updatePattern(id: String!, tempo: Int!): Pattern
 }
 
 type Pattern {
+  bestTempo: Int
   description: String
   id: Int
   name: String

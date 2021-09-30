@@ -45,6 +45,7 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Mutation: {};
   Pattern: { // root type
+    bestTempo?: number | null; // Int
     description?: string | null; // String
     id?: number | null; // Int
     name?: string | null; // String
@@ -76,8 +77,10 @@ export interface NexusGenFieldTypes {
     createRecord: NexusGenRootTypes['Record'] | null; // Record
     deletePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     deleteRecord: NexusGenRootTypes['Record'] | null; // Record
+    updatePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
   }
   Pattern: { // field return type
+    bestTempo: number | null; // Int
     description: string | null; // String
     id: number | null; // Int
     name: string | null; // String
@@ -104,8 +107,10 @@ export interface NexusGenFieldTypeNames {
     createRecord: 'Record'
     deletePattern: 'Pattern'
     deleteRecord: 'Record'
+    updatePattern: 'Pattern'
   }
   Pattern: { // field return type name
+    bestTempo: 'Int'
     description: 'String'
     id: 'Int'
     name: 'String'
@@ -139,10 +144,14 @@ export interface NexusGenArgTypes {
       tempo: number; // Int!
     }
     deletePattern: { // args
-      patternId: number; // Int!
+      patternId: string; // String!
     }
     deleteRecord: { // args
       recordId: number; // Int!
+    }
+    updatePattern: { // args
+      id: string; // String!
+      tempo: number; // Int!
     }
   }
   Query: {

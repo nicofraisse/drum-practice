@@ -24,7 +24,7 @@ const Mutations = objectType({
     t.nullable.field('deletePattern', {
       type: 'Pattern',
       args: {
-        patternId: nonNull(intArg())
+        patternId: nonNull(stringArg())
       },
       resolve: (_, { patternId }) => {
         return prisma.pattern.delete({
@@ -39,13 +39,44 @@ const Mutations = objectType({
         rating: nonNull(intArg()),
         patternId: nonNull(stringArg())
       },
-      resolve: (_, { tempo, rating, patternId }) => {
+      resolve: async (_, { tempo, rating, patternId }) => {
+        const pattern = await prisma.pattern.findUnique({
+          where: {
+            id: Number(patternId)
+          }
+        })
+        console.log('THE PAT', pattern)
+        // Todo: Isn't there a way to directly update the previous variable like pattern.update
+        if (rating === 3 && (!pattern.bestTempo || pattern.bestTempo < tempo)) {
+          await prisma.pattern.update({
+            where: {
+              id: Number(patternId)
+            },
+            data: {
+              bestTempo: tempo
+            }
+          })
+        }
+
         return prisma.record.create({
           data: {
             tempo,
             rating,
             patternId: Number(patternId)
           }
+        })
+      }
+    })
+    t.nullable.field('updatePattern', {
+      type: 'Pattern',
+      args: {
+        id: nonNull(stringArg()),
+        tempo: nonNull(intArg())
+      },
+      resolve: (_, { id, tempo }) => {
+        return prisma.pattern.update({
+          where: { id: Number(id) },
+          data: { bestTempo: tempo }
         })
       }
     })
