@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useTempo } from 'lib/tempo'
+import { useTempo } from 'components/context/Tempo'
 import { MinusCircle, PlusCircle } from 'react-feather'
 
 const Decrease = () => {

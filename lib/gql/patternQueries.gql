@@ -1,0 +1,7 @@
+query GET_PATTERNS {
+  patterns {
+    id
+    name
+    score
+  }
+}

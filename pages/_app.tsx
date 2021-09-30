@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ApolloProvider } from '@apollo/client'
 import Layout from 'components/Layout'
 import apolloClient from 'lib/apolloClient'
-import TempoProvider from 'lib/tempo'
+import TempoProvider from 'components/context/Tempo'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'
-import { useTempo } from 'lib/tempo'
+import { useTempo } from 'components/context/Tempo'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { X, Star } from 'react-feather'

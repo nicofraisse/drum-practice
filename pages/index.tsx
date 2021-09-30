@@ -6,16 +6,8 @@ import gql from 'graphql-tag'
 import Link from 'next/link'
 import { X } from 'react-feather'
 import Container from 'components/Container'
+import { GET_PATTERNS } from 'lib/gql/patternQueries.gql'
 
-const patternsQuery = gql`
-  query PatternsQuery {
-    patterns {
-      id
-      name
-      score
-    }
-  }
-`
 const createPatternMutation = gql`
   mutation createPatternMutation(
     $name: String!
@@ -57,14 +49,14 @@ const Pattern = ({ data, handleDelete }) => (
 )
 
 export default function Home() {
-  const { loading, error, data } = useQuery(patternsQuery)
+  const { loading, error, data } = useQuery(GET_PATTERNS)
 
   const [createPattern] = useMutation(createPatternMutation, {
-    refetchQueries: () => [{ query: patternsQuery }]
+    refetchQueries: () => [{ query: GET_PATTERNS }]
   })
 
   const [deletePattern] = useMutation(deletePatternMutation, {
-    refetchQueries: () => [{ query: patternsQuery }]
+    refetchQueries: () => [{ query: GET_PATTERNS }]
   })
 
   if (error) return error.message
