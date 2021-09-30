@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { ApolloProvider } from '@apollo/client'
 import Layout from 'components/Layout'
@@ -15,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </TempoProvider>
-      <ToastContainer />
+      <ToastContainer position="bottom-left" />
     </ApolloProvider>
   )
 }

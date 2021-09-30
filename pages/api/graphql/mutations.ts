@@ -32,6 +32,34 @@ const Mutations = objectType({
         })
       }
     })
+    t.field('createRecord', {
+      type: 'Record',
+      args: {
+        tempo: nonNull(intArg()),
+        rating: nonNull(intArg()),
+        patternId: nonNull(stringArg())
+      },
+      resolve: (_, { tempo, rating, patternId }) => {
+        return prisma.record.create({
+          data: {
+            tempo,
+            rating,
+            patternId: Number(patternId)
+          }
+        })
+      }
+    })
+    t.nullable.field('deleteRecord', {
+      type: 'Record',
+      args: {
+        recordId: nonNull(intArg())
+      },
+      resolve: (_, { recordId }) => {
+        return prisma.record.delete({
+          where: { id: Number(recordId) }
+        })
+      }
+    })
   }
 })
 

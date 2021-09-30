@@ -51,6 +51,13 @@ export interface NexusGenObjects {
     score?: string | null; // String
   }
   Query: {};
+  Record: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id?: number | null; // Int
+    patternId?: number | null; // Int
+    rating?: number | null; // Int
+    tempo?: number | null; // Int
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -66,7 +73,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createPattern: NexusGenRootTypes['Pattern'] | null; // Pattern
+    createRecord: NexusGenRootTypes['Record'] | null; // Record
     deletePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
+    deleteRecord: NexusGenRootTypes['Record'] | null; // Record
   }
   Pattern: { // field return type
     description: string | null; // String
@@ -77,13 +86,24 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     pattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     patterns: Array<NexusGenRootTypes['Pattern'] | null> | null; // [Pattern]
+    records: Array<NexusGenRootTypes['Record'] | null> | null; // [Record]
+  }
+  Record: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: number | null; // Int
+    pattern: NexusGenRootTypes['Pattern'] | null; // Pattern
+    patternId: number | null; // Int
+    rating: number | null; // Int
+    tempo: number | null; // Int
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createPattern: 'Pattern'
+    createRecord: 'Record'
     deletePattern: 'Pattern'
+    deleteRecord: 'Record'
   }
   Pattern: { // field return type name
     description: 'String'
@@ -94,6 +114,15 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     pattern: 'Pattern'
     patterns: 'Pattern'
+    records: 'Record'
+  }
+  Record: { // field return type name
+    createdAt: 'DateTime'
+    id: 'Int'
+    pattern: 'Pattern'
+    patternId: 'Int'
+    rating: 'Int'
+    tempo: 'Int'
   }
 }
 
@@ -104,13 +133,24 @@ export interface NexusGenArgTypes {
       name: string; // String!
       score: string; // String!
     }
+    createRecord: { // args
+      patternId: string; // String!
+      rating: number; // Int!
+      tempo: number; // Int!
+    }
     deletePattern: { // args
       patternId: number; // Int!
+    }
+    deleteRecord: { // args
+      recordId: number; // Int!
     }
   }
   Query: {
     pattern: { // args
       id: string; // String!
+    }
+    records: { // args
+      patternId: string; // String!
     }
   }
 }

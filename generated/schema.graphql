@@ -9,7 +9,9 @@ scalar DateTime
 
 type Mutation {
   createPattern(description: String, name: String!, score: String!): Pattern
+  createRecord(patternId: String!, rating: Int!, tempo: Int!): Record
   deletePattern(patternId: Int!): Pattern
+  deleteRecord(recordId: Int!): Record
 }
 
 type Pattern {
@@ -22,4 +24,14 @@ type Pattern {
 type Query {
   pattern(id: String!): Pattern
   patterns: [Pattern]
+  records(patternId: String!): [Record]
+}
+
+type Record {
+  createdAt: DateTime!
+  id: Int
+  pattern: Pattern
+  patternId: Int
+  rating: Int
+  tempo: Int
 }

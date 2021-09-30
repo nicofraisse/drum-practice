@@ -5,6 +5,7 @@ import { Form } from 'components/ui/Form'
 import gql from 'graphql-tag'
 import Link from 'next/link'
 import { X } from 'react-feather'
+import Container from 'components/Container'
 
 const patternsQuery = gql`
   query PatternsQuery {
@@ -82,7 +83,7 @@ export default function Home() {
   }
 
   return (
-    <div className="p-5">
+    <Container>
       {data?.patterns.map((p: any) => (
         <Pattern key={p.id} data={p} handleDelete={handleDeletePattern} />
       ))}
@@ -110,6 +111,6 @@ export default function Home() {
           </>
         )}
       </Form>
-    </div>
+    </Container>
   )
 }

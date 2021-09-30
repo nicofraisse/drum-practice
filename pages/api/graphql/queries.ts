@@ -21,6 +21,17 @@ const Queries = objectType({
         })
       }
     })
+    t.list.field('records', {
+      type: 'Record',
+      args: { patternId: nonNull(stringArg()) },
+      resolve: (_, args) => {
+        return prisma.record.findMany({
+          where: {
+            patternId: Number(args.patternId)
+          }
+        })
+      }
+    })
   }
 })
 
