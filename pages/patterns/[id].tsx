@@ -2,25 +2,14 @@ import { useQuery, useMutation } from '@apollo/client'
 import Card from 'components/Card'
 import Tempo from 'components/Tempo'
 import SelfEvaluation from 'components/Rating'
-import gql from 'graphql-tag'
 import { useRouter } from 'next/router'
 import Container from 'components/Container'
-
-const patternsQuery = gql`
-  query PatternQuery($id: String!) {
-    pattern(id: $id) {
-      id
-      name
-      description
-      score
-    }
-  }
-`
+import { GET_PATTERN } from 'lib/gql/patternQueries.gql'
 
 const Pattern = () => {
   const id = useRouter().query.id
 
-  const { data, loading } = useQuery(patternsQuery, {
+  const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id },
     skip: !id
   })

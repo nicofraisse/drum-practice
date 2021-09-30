@@ -5,3 +5,12 @@ query GET_PATTERNS {
     score
   }
 }
+
+query GET_PATTERN($id: String!) {
+  pattern(id: $id) {
+    id
+    name
+    description
+    score
+  }
+}

@@ -1,0 +1,8 @@
+query GET_PATTERN_RECORDS($patternId: String!) {
+  records(patternId: $patternId) {
+    id
+    tempo
+    rating
+    createdAt
+  }
+}

@@ -7,25 +7,7 @@ import Link from 'next/link'
 import { X } from 'react-feather'
 import Container from 'components/Container'
 import { GET_PATTERNS } from 'lib/gql/patternQueries.gql'
-
-const createPatternMutation = gql`
-  mutation createPatternMutation(
-    $name: String!
-    $score: String!
-    $description: String
-  ) {
-    createPattern(name: $name, score: $score, description: $description) {
-      id
-    }
-  }
-`
-const deletePatternMutation = gql`
-  mutation deletePatternMutation($patternId: Int!) {
-    deletePattern(patternId: $patternId) {
-      id
-    }
-  }
-`
+import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/patternMutations.gql'
 
 const Pattern = ({ data, handleDelete }) => (
   <div
@@ -51,11 +33,11 @@ const Pattern = ({ data, handleDelete }) => (
 export default function Home() {
   const { loading, error, data } = useQuery(GET_PATTERNS)
 
-  const [createPattern] = useMutation(createPatternMutation, {
+  const [createPattern] = useMutation(CREATE_PATTERN, {
     refetchQueries: () => [{ query: GET_PATTERNS }]
   })
 
-  const [deletePattern] = useMutation(deletePatternMutation, {
+  const [deletePattern] = useMutation(DELETE_PATTERN, {
     refetchQueries: () => [{ query: GET_PATTERNS }]
   })
 

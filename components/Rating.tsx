@@ -1,10 +1,11 @@
-import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'
 import { useTempo } from 'components/context/Tempo'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { X, Star } from 'react-feather'
 import { format } from 'date-fns'
+import { GET_PATTERN_RECORDS } from 'lib/gql/recordQueries.gql'
+import { CREATE_RECORD, DELETE_RECORD } from 'lib/gql/recordMutations.gql'
 
 const ratings = [
   {
@@ -53,51 +54,20 @@ const Rating = ({ data, handleRate }) => {
   )
 }
 
-const createRecordMutation = gql`
-  mutation createRecordMutation(
-    $tempo: Int!
-    $rating: Int!
-    $patternId: String!
-  ) {
-    createRecord(tempo: $tempo, rating: $rating, patternId: $patternId) {
-      id
-      createdAt
-    }
-  }
-`
-const patternRecordsQuery = gql`
-  query patternRecordsQuery($patternId: String!) {
-    records(patternId: $patternId) {
-      id
-      tempo
-      rating
-      createdAt
-    }
-  }
-`
-
-const deleteRecordMutation = gql`
-  mutation deleteRecordMutation($recordId: Int!) {
-    deleteRecord(recordId: $recordId) {
-      id
-    }
-  }
-`
-
 const SelfEvaluation = ({ patternId }) => {
   const { query } = useRouter()
-  const { data, loading, error } = useQuery(patternRecordsQuery, {
+  const { data, loading, error } = useQuery(GET_PATTERN_RECORDS, {
     variables: { patternId: query.id },
     skip: !query.id
   })
-  const [createRecord] = useMutation(createRecordMutation, {
+  const [createRecord] = useMutation(CREATE_RECORD, {
     refetchQueries: () => [
-      { query: patternRecordsQuery, variables: { patternId: query.id } }
+      { query: GET_PATTERN_RECORDS, variables: { patternId: query.id } }
     ]
   })
-  const [deleteRecord] = useMutation(deleteRecordMutation, {
+  const [deleteRecord] = useMutation(DELETE_RECORD, {
     refetchQueries: () => [
-      { query: patternRecordsQuery, variables: { patternId: query.id } }
+      { query: GET_PATTERN_RECORDS, variables: { patternId: query.id } }
     ]
   })
 
