@@ -1,16 +1,23 @@
 import classNames from 'classnames'
 import Input from 'components/Input'
 import { Field as FormikField } from 'formik'
-import { capitalize } from 'lodash'
+import { startCase } from 'lodash'
 
-const Field = ({ name, type = 'text', className, control, ...props }) => {
+const Field = ({
+  name,
+  type = 'text',
+  className,
+  control,
+  label,
+  ...props
+}) => {
   return (
     <FormikField name={name}>
       {({ field }) => {
         return (
           <div className={classNames(className, 'mb-2')}>
             <label htmlFor={name} className="block">
-              {capitalize(name)}
+              {label || startCase(name)}
             </label>
 
             {control || <Input type={type} id={name} {...field} {...props} />}

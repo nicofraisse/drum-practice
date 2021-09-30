@@ -24,14 +24,15 @@ const PatternCreate = ({ refetchQueries }) => {
   return (
     <Card>
       <Form
-        initialValues={{ score: '', name: '', description: '' }}
+        initialValues={{ score: '', name: '', startTempo: 120 }}
         onSubmit={handleSubmit}
       >
         {() => (
           <>
             <Field type="text" name="name" />
-            <Field type="textarea" name="description" />
             <Field type="text" name="score" />
+            <Field type="number" name="startTempo" label="Start tempo (bpm)" />
+            {/* <Field type="textarea" name="description" /> */}
             <Button>Submit</Button>
           </>
         )}

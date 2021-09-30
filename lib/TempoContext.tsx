@@ -40,10 +40,8 @@ const TempoProvider = ({ children }) => {
   }, [isRunning, tempo])
 
   useEffect(() => {
-    console.log({ timer })
     if (isRunning) {
       timerInterval = setInterval(() => {
-        console.log('in here')
         setTimer(timer + 1)
       }, 1000)
     }

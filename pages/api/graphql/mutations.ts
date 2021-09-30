@@ -45,7 +45,6 @@ const Mutations = objectType({
             id: Number(patternId)
           }
         })
-        console.log('THE PAT', pattern)
         // Todo: Isn't there a way to directly update the previous variable like pattern.update
         if (rating === 3 && (!pattern.bestTempo || pattern.bestTempo < tempo)) {
           await prisma.pattern.update({

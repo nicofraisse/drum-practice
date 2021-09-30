@@ -1,41 +1,10 @@
 import { useMutation } from '@apollo/client'
+import { ratings } from 'data/ratings'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { CREATE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
 import { useTempo } from 'lib/TempoContext'
 import React from 'react'
 import { toast } from 'react-toastify'
-
-const ratings = [
-  {
-    mark: 0,
-    title: 'Failed',
-    description: 'You did not succeed in playing a full minute of the riff',
-    color: 'red-200',
-    increment: -2
-  },
-  {
-    mark: 1,
-    title: 'Barely made it (major mistakes)',
-    description: 'You managed to play the full minute with major mistakes',
-    color: 'red-100',
-    increment: -1
-  },
-  {
-    mark: 2,
-    title: 'Decent perfomance (Resistance point)',
-    description: 'You managed to play the full minute with minor mistakes',
-    color: 'yellow-200',
-    increment: 0
-  },
-  {
-    mark: 3,
-    title: 'Perfect',
-    description:
-      'You managed to play the full minute with no noticable mistakes',
-    color: 'green-200',
-    increment: +1
-  }
-]
 
 const Rating = ({ data, handleRate }) => {
   return (
@@ -78,7 +47,6 @@ const Create = ({ patternId }) => {
       })
       .catch((err) => {
         toast.error('Error saving record')
-        console.log('err', err.message)
       })
   }
   return (

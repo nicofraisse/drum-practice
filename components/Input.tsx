@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import { lowerCase } from 'lodash'
 
 export type InputProps = {
   className?: string
@@ -7,7 +8,7 @@ export type InputProps = {
 }
 
 const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
-  const placeholder = props.placeholder || `Enter ${props.name} here`
+  const placeholder = props.placeholder || `Enter ${lowerCase(props.name)} here`
   if (type === 'textarea') {
     return (
       <textarea
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
       />
     )
   }
+
   return (
     <input
       type={type}

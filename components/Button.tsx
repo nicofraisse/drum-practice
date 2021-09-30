@@ -3,7 +3,6 @@ import ConditionalWrapper from 'components/ConditionalWrapper'
 import Link from 'next/link'
 
 const Button = ({ children, className, href, ...props }) => {
-  console.log('href', href)
   return (
     <ConditionalWrapper
       condition={href}

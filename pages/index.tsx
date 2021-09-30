@@ -1,5 +1,5 @@
-import Card from 'components/Card'
 import { useQuery } from '@apollo/client'
+import Card from 'components/Card'
 import Container from 'components/Container'
 import PatternCreate from 'components/Pattern/Create'
 import PatternList from 'components/Pattern/List'
@@ -12,12 +12,10 @@ export default function Home() {
   if (loading) return 'loading'
 
   return (
-    <>
-      <Container>
-        <Card>Go back to where you left off</Card>
-        <PatternList patterns={data.patterns} refetchQueries={[GET_PATTERNS]} />
-        <PatternCreate refetchQueries={[GET_PATTERNS]} />
-      </Container>
-    </>
+    <Container>
+      <Card>Go back to where you left off</Card>
+      <PatternList patterns={data.patterns} refetchQueries={[GET_PATTERNS]} />
+      <PatternCreate refetchQueries={[GET_PATTERNS]} />
+    </Container>
   )
 }

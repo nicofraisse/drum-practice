@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
+import classNames from 'classnames'
+import { ratings } from 'data/ratings'
 import { format } from 'date-fns'
 import { DELETE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
+import { reverse } from 'lodash'
 import { useRouter } from 'next/router'
 import { Star, X } from 'react-feather'
 import { toast } from 'react-toastify'
@@ -25,12 +28,16 @@ const RecordList = ({ patternId }) => {
       .catch((e) => toast.error(e.message))
   }
 
+  if (!data) return null
+
   return (
     <div>
-      {data?.records?.map((r) => (
+      {reverse([...data.records])?.map((r) => (
         <div
           key={r.id}
-          className="p-2 border bg-gray-100 shadow flex items-center justify-between"
+          className={classNames(
+            'p-2 border shadow flex items-center justify-between'
+          )}
         >
           <div className="flex items-center">
             {format(new Date(r.createdAt), 'd/MM/yyyy')}: {r.tempo}bpm
