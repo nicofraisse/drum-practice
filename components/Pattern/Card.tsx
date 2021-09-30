@@ -14,10 +14,12 @@ const PatternCard = ({ data, handleDelete }) => (
       <Link href={`/patterns/${data.id}`}>
         <div className="px-5">View</div>
       </Link>
-      <X
-        onClick={() => handleDelete(data.id)}
-        className="cursor-pointer hover:opacity-60"
-      />
+      {handleDelete && (
+        <X
+          onClick={() => handleDelete(data.id)}
+          className="cursor-pointer hover:opacity-60"
+        />
+      )}
     </div>
   </div>
 )
