@@ -1,5 +1,5 @@
-import { objectType } from 'nexus'
 import prisma from 'lib/prisma'
+import { objectType } from 'nexus'
 
 const Pattern = objectType({
   name: 'Pattern',

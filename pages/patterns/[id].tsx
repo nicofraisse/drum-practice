@@ -1,10 +1,10 @@
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Card from 'components/Card'
-import Tempo from 'components/Tempo'
-import SelfEvaluation from 'components/Rating'
-import { useRouter } from 'next/router'
 import Container from 'components/Container'
+import SelfEvaluation from 'components/Rating'
+import Tempo from 'components/Tempo'
 import { GET_PATTERN } from 'lib/gql/patternQueries.gql'
+import { useRouter } from 'next/router'
 
 const Pattern = () => {
   const id = useRouter().query.id

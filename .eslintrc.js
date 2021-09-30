@@ -44,6 +44,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
     'react-hooks/rules-of-hooks': 'error',
     'react/prop-types': 0,
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],

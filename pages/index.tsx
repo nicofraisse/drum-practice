@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client'
+import Container from 'components/Container'
 import Button from 'components/ui/Button'
 import Field from 'components/ui/Field'
 import { Form } from 'components/ui/Form'
-import gql from 'graphql-tag'
+import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/patternMutations.gql'
+import { GET_PATTERNS } from 'lib/gql/patternQueries.gql'
 import Link from 'next/link'
 import { X } from 'react-feather'
-import Container from 'components/Container'
-import { GET_PATTERNS } from 'lib/gql/patternQueries.gql'
-import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/patternMutations.gql'
+import { toast } from 'react-toastify'
 
 const Pattern = ({ data, handleDelete }) => (
   <div
@@ -46,14 +46,14 @@ export default function Home() {
 
   const handleSubmit = (values) => {
     createPattern({ variables: values })
-      .then((data) => console.log('success', data))
-      .catch((e) => console.log('error', e.message))
+      .then((data) => toast.success('success', data))
+      .catch((e) => toast.error('error', e.message))
   }
 
   const handleDeletePattern = (patternId) => {
     deletePattern({ variables: { patternId } })
-      .then((data) => console.log('success', data))
-      .catch((e) => console.log('error', e.message))
+      .then((data) => toast.success('success', data))
+      .catch((e) => toast.error('error', e.message))
   }
 
   return (

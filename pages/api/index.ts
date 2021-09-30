@@ -1,17 +1,14 @@
 import { ApolloServer } from 'apollo-server-micro'
-import { DateTimeResolver } from 'graphql-scalars'
+import { GraphQLDateTime } from 'graphql-iso-date'
 import apolloHandler from 'lib/apolloHandler'
 import cors from 'micro-cors'
 import { asNexusMethod, makeSchema } from 'nexus'
-import { GraphQLDateTime } from 'graphql-iso-date'
-
 import path from 'path'
 
+import Models from './graphql/models'
 import Mutations from './graphql/mutations'
 import Queries from './graphql/queries'
-import Models from './graphql/models'
 
-// export const GQLDate = asNexusMethod(DateTimeResolver, 'date')
 export const DateTime = asNexusMethod(GraphQLDateTime, 'date')
 
 export const schema = makeSchema({

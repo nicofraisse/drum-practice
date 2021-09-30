@@ -1,11 +1,11 @@
-import { useQuery, useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useTempo } from 'components/context/Tempo'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
-import { X, Star } from 'react-feather'
 import { format } from 'date-fns'
-import { GET_PATTERN_RECORDS } from 'lib/gql/recordQueries.gql'
 import { CREATE_RECORD, DELETE_RECORD } from 'lib/gql/recordMutations.gql'
+import { GET_PATTERN_RECORDS } from 'lib/gql/recordQueries.gql'
+import { useRouter } from 'next/router'
+import { Star, X } from 'react-feather'
+import { toast } from 'react-toastify'
 
 const ratings = [
   {
@@ -56,7 +56,7 @@ const Rating = ({ data, handleRate }) => {
 
 const SelfEvaluation = ({ patternId }) => {
   const { query } = useRouter()
-  const { data, loading, error } = useQuery(GET_PATTERN_RECORDS, {
+  const { data } = useQuery(GET_PATTERN_RECORDS, {
     variables: { patternId: query.id },
     skip: !query.id
   })
@@ -86,11 +86,10 @@ const SelfEvaluation = ({ patternId }) => {
         rating: mark
       }
     })
-      .then((data) => {
+      .then(() => {
         toast.success('Saved!')
-        console.log('Data', data)
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error('Error saving record')
       })
   }
@@ -101,12 +100,20 @@ const SelfEvaluation = ({ patternId }) => {
         <Rating data={r} key={r.mark} handleRate={handleRate} />
       ))}
       {data?.records?.map((r) => (
-        <div className="p-2 border bg-gray-100 shadow flex items-center justify-between">
+        <div
+          key={r.id}
+          className="p-2 border bg-gray-100 shadow flex items-center justify-between"
+        >
           <div className="flex items-center">
             {format(new Date(r.createdAt), 'd/MM/yyyy')}: {r.tempo}bpm
             <div className="flex ml-2">
-              {[...Array(r.rating)].map((r) => (
-                <Star size={20} className="text-yellow-500" fill="yellow" />
+              {[...Array(r.rating)].map((x) => (
+                <Star
+                  size={20}
+                  className="text-yellow-500"
+                  fill="yellow"
+                  key={x}
+                />
               ))}
             </div>
           </div>
