@@ -42,6 +42,6 @@ model Record {
   tempo     Int
   rating    Int
   patternId Int
-  Pattern   Pattern  @relation(fields: [patternId], references: [id])
+  Pattern   Pattern  @relation(fields: [patternId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("date")
 }

@@ -1,0 +1,27 @@
+query GET_PATTERNS {
+  patterns {
+    id
+    name
+    score
+  }
+}
+query GET_PATTERN($id: String!) {
+  pattern(id: $id) {
+    id
+    name
+    description
+    score
+  }
+}
+
+mutation CREATE_PATTERN($name: String!, $score: String!, $description: String) {
+  createPattern(name: $name, score: $score, description: $description) {
+    id
+  }
+}
+
+mutation DELETE_PATTERN($patternId: Int!) {
+  deletePattern(patternId: $patternId) {
+    id
+  }
+}

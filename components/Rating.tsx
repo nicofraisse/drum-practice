@@ -1,8 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useTempo } from 'components/context/Tempo'
 import { format } from 'date-fns'
-import { CREATE_RECORD, DELETE_RECORD } from 'lib/gql/recordMutations.gql'
-import { GET_PATTERN_RECORDS } from 'lib/gql/recordQueries.gql'
+import {
+  GET_PATTERN_RECORDS,
+  CREATE_RECORD,
+  DELETE_RECORD
+} from 'lib/gql/record.gql'
 import { useRouter } from 'next/router'
 import { Star, X } from 'react-feather'
 import { toast } from 'react-toastify'

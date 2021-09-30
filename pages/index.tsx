@@ -1,34 +1,16 @@
 import { useMutation, useQuery } from '@apollo/client'
 import Container from 'components/Container'
-import Button from 'components/ui/Button'
-import Field from 'components/ui/Field'
-import { Form } from 'components/ui/Form'
-import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/patternMutations.gql'
-import { GET_PATTERNS } from 'lib/gql/patternQueries.gql'
-import Link from 'next/link'
-import { X } from 'react-feather'
-import { toast } from 'react-toastify'
+import Button from 'components/Button'
+import Field from 'components/Field'
+import { Form } from 'components/Form'
+import {
+  GET_PATTERNS,
+  CREATE_PATTERN,
+  DELETE_PATTERN
+} from 'lib/gql/pattern.gql'
 
-const Pattern = ({ data, handleDelete }) => (
-  <div
-    key={data.id}
-    className="border border-gray p-4 bg-gray-100 my-3 flex justify-between"
-  >
-    <div className="flex items-center">
-      <div className="mr-5 bg-yellow-200 py-1 px-5 rounded">{data.name}</div>
-      <div className="mr-5 bg-green-200 py-1 px-5 rounded">{data.score}</div>
-    </div>
-    <div className="flex underline">
-      <Link href={`/patterns/${data.id}`}>
-        <div className="px-5">View</div>
-      </Link>
-      <X
-        onClick={() => handleDelete(data.id)}
-        className="cursor-pointer hover:opacity-60"
-      />
-    </div>
-  </div>
-)
+import { toast } from 'react-toastify'
+import PatternList from 'components/Pattern/List'
 
 export default function Home() {
   const { loading, error, data } = useQuery(GET_PATTERNS)
@@ -51,17 +33,23 @@ export default function Home() {
   }
 
   const handleDeletePattern = (patternId) => {
-    deletePattern({ variables: { patternId } })
-      .then((data) => toast.success('success', data))
-      .catch((e) => toast.error('error', e.message))
+    if (
+      window.confirm(
+        'Are you sure you want to delete this pattern? All corresponding records will be deleted.'
+      )
+    ) {
+      deletePattern({ variables: { patternId } })
+        .then((data) => toast.success('success', data))
+        .catch((e) => {
+          toast.error('error', e.message)
+          console.error('e', e.message)
+        })
+    }
   }
 
   return (
     <Container>
-      {data?.patterns.map((p: any) => (
-        <Pattern key={p.id} data={p} handleDelete={handleDeletePattern} />
-      ))}
-
+      <PatternList data={data} handleDelete={handleDeletePattern} />
       <Form
         initialValues={{ score: '', name: '' }}
         onSubmit={handleSubmit}

@@ -1,3 +1,12 @@
+query GET_PATTERN_RECORDS($patternId: String!) {
+  records(patternId: $patternId) {
+    id
+    tempo
+    rating
+    createdAt
+  }
+}
+
 mutation CREATE_RECORD($tempo: Int!, $rating: Int!, $patternId: String!) {
   createRecord(tempo: $tempo, rating: $rating, patternId: $patternId) {
     id

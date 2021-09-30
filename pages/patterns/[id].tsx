@@ -3,7 +3,7 @@ import Card from 'components/Card'
 import Container from 'components/Container'
 import SelfEvaluation from 'components/Rating'
 import Tempo from 'components/Tempo'
-import { GET_PATTERN } from 'lib/gql/patternQueries.gql'
+import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 
 const Pattern = () => {
