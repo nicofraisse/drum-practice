@@ -1,10 +1,9 @@
 import classNames from 'classnames'
 import { useTempo } from 'components/context/Tempo'
-import { MinusCircle, PlusCircle } from 'react-feather'
-import { Play, PlayCircle } from 'react-feather'
+import { MinusCircle, Play, PlusCircle } from 'react-feather'
 
 const TempoControl = ({ type, disabled }) => {
-  const { increaseTempo, decreaseTempo, tempo, setTempo } = useTempo()
+  const { increaseTempo, decreaseTempo } = useTempo()
   const icon = type === 'increase' ? <PlusCircle /> : <MinusCircle />
   const action = type === 'increase' ? increaseTempo : decreaseTempo
 

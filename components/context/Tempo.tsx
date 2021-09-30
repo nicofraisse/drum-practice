@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, useEffect } from 'react'
 import {
-  increaseTempo as increase,
-  decreaseTempo as decrease
+  decreaseTempo as decrease,
+  increaseTempo as increase
 } from 'lib/metronome'
+import { createContext, useContext, useEffect, useState } from 'react'
 const TempoContext = createContext({})
 
 const TempoProvider = ({ children }) => {
@@ -18,7 +18,6 @@ const TempoProvider = ({ children }) => {
   let intervalId
   useEffect(() => {
     if (isRunning) {
-      console.log('IT IS START')
       clearInterval(intervalId)
       intervalId = setInterval(() => console.log('started'), 1000)
     }
