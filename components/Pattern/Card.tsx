@@ -1,27 +1,28 @@
+import Card from 'components/Card'
 import Link from 'next/link'
-import { X } from 'react-feather'
+import { Trash } from 'react-feather'
 
-const PatternCard = ({ data, handleDelete }) => (
-  <div
-    key={data.id}
-    className="border border-gray p-4 bg-gray-100 my-3 flex justify-between"
+const PatternCard = ({ pattern, handleDelete }) => (
+  <Card
+    key={pattern.id}
+    className="border border-gray p-4 my-3 flex justify-between shadow-none"
   >
     <div className="flex items-center">
-      <div className="mr-5 bg-yellow-200 py-1 px-5 rounded">{data.name}</div>
-      <div className="mr-5 bg-green-200 py-1 px-5 rounded">{data.score}</div>
+      <div className="mr-5 bg-yellow-200 py-1 px-5 rounded">{pattern.name}</div>
+      <div className="mr-5 bg-green-200 py-1 px-5 rounded">{pattern.score}</div>
     </div>
     <div className="flex underline">
-      <Link href={`/patterns/${data.id}`}>
-        <div className="px-5">View</div>
+      <Link href={`/patterns/${pattern.id}`}>
+        <div className="px-5">Practice</div>
       </Link>
       {handleDelete && (
-        <X
-          onClick={() => handleDelete(data.id)}
+        <Trash
+          onClick={() => handleDelete(pattern.id)}
           className="cursor-pointer hover:opacity-60"
         />
       )}
     </div>
-  </div>
+  </Card>
 )
 
 export default PatternCard

@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <Container>
-      <PatternList data={data} refetchQueries={[GET_PATTERNS]} />
+      <PatternList patterns={data.patterns} refetchQueries={[GET_PATTERNS]} />
       <PatternCreate refetchQueries={[GET_PATTERNS]} />
     </Container>
   )

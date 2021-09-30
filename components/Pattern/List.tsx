@@ -3,7 +3,7 @@ import PatternCard from 'components/Pattern/Card'
 import { DELETE_PATTERN } from 'lib/gql/pattern.gql'
 import { toast } from 'react-toastify'
 
-const PatternList = ({ data, refetchQueries }) => {
+const PatternList = ({ patterns, refetchQueries }) => {
   const [deletePattern] = useMutation(DELETE_PATTERN, {
     refetchQueries
   })
@@ -21,8 +21,8 @@ const PatternList = ({ data, refetchQueries }) => {
         })
     }
   }
-  return data?.patterns.map((p: any) => (
-    <PatternCard key={p.id} data={p} handleDelete={handleDeletePattern} />
+  return patterns.map((p: any) => (
+    <PatternCard key={p.id} pattern={p} handleDelete={handleDeletePattern} />
   ))
 }
 

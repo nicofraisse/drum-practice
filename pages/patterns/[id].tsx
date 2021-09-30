@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import Card from 'components/Card'
 import Container from 'components/Container'
+import Score from 'components/Pattern/Score'
 import SelfEvaluation from 'components/Rating'
 import Tempo from 'components/Tempo'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
@@ -21,20 +22,14 @@ const Pattern = () => {
       <Card>
         <h1 className="font-bold text-lg">{data.pattern.name}</h1>
         <p className="text-gray-600 mb-2">{data.pattern.description}</p>
-        <div className="flex flex-wrap">
-          {[...data.pattern.score].map((x) => (
-            <div
-              key={Math.random()}
-              className="w-8 h-8 mr-2 rounded bg-red-100 flex items-center justify-center"
-            >
-              {x}
-            </div>
-          ))}
-        </div>
+        <Score pattern={data.pattern} />
       </Card>
-      <Card>
-        <Tempo />
-      </Card>
+      <div className="flex">
+        <Card className="mr-4">
+          <Tempo />
+        </Card>
+        <Card className="flex-grow"></Card>
+      </div>
       <Card>
         <SelfEvaluation patternId={id} />
       </Card>

@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import Button from 'components/Button'
+import Card from 'components/Card'
 import Field from 'components/Field'
 import { Form } from 'components/Form'
 import { CREATE_PATTERN } from 'lib/gql/pattern.gql'
@@ -21,25 +22,21 @@ const PatternCreate = ({ refetchQueries }) => {
   }
 
   return (
-    <Form
-      initialValues={{ score: '', name: '' }}
-      onSubmit={handleSubmit}
-      className="border shadow-lg p-5"
-    >
-      {() => (
-        <>
-          <Field
-            type="text"
-            placeholder="Enter here"
-            name="name"
-            className={3}
-          />
-          <Field type="textarea" placeholder="Enter here" name="description" />
-          <Field type="text" placeholder="Enter here" name="score" />
-          <Button>Submit</Button>
-        </>
-      )}
-    </Form>
+    <Card>
+      <Form
+        initialValues={{ score: '', name: '', description: '' }}
+        onSubmit={handleSubmit}
+      >
+        {() => (
+          <>
+            <Field type="text" name="name" />
+            <Field type="textarea" name="description" />
+            <Field type="text" name="score" />
+            <Button>Submit</Button>
+          </>
+        )}
+      </Form>
+    </Card>
   )
 }
 

@@ -7,11 +7,13 @@ export type InputProps = {
 }
 
 const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
+  const placeholder = props.placeholder || `Enter ${props.name} here`
   if (type === 'textarea') {
     return (
       <textarea
         value={value || ''}
         className={classNames('border rounded px-2 py-1', className)}
+        placeholder={placeholder}
         {...props}
       />
     )
@@ -21,6 +23,7 @@ const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
       type={type}
       value={value || ''}
       className={classNames('border rounded px-2 py-1', className)}
+      placeholder={placeholder}
       {...props}
     />
   )
