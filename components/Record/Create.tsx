@@ -45,7 +45,7 @@ const Create = ({ patternId }) => {
       .then(() => {
         toast.success('Saved!')
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error('Error saving record')
       })
   }

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Card from 'components/Card'
 import Container from 'components/Container'
 import Metronome from 'components/Metronome'
@@ -9,7 +9,7 @@ import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const practice = () => {
+const Practice = () => {
   const id = useRouter().query.id
 
   const { data, loading } = useQuery(GET_PATTERN, {
@@ -35,4 +35,4 @@ const practice = () => {
   )
 }
 
-export default practice
+export default Practice

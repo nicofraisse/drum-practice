@@ -3,8 +3,8 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import Score from 'components/Pattern/Score'
 import { GET_PATTERN, UPDATE_PATTERN_BEST_TEMPO } from 'lib/gql/pattern.gql'
-import { Edit, Trash } from 'react-feather'
 import { useTempo } from 'lib/TempoContext'
+import { Edit, Trash } from 'react-feather'
 
 const PatternCard = ({ pattern, collapsed, page, handleDelete }) => {
   const { tempo } = useTempo()

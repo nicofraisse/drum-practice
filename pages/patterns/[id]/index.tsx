@@ -3,20 +3,13 @@ import Card from 'components/Card'
 import Container from 'components/Container'
 import PatternCard from 'components/Pattern/Card'
 import RecordList from 'components/Record/List'
-import {
-  DELETE_PATTERN,
-  GET_PATTERN,
-  GET_PATTERNS,
-  UPDATE_PATTERN_BEST_TEMPO
-} from 'lib/gql/pattern.gql'
-import { useTempo } from 'lib/TempoContext'
+import { DELETE_PATTERN, GET_PATTERN, GET_PATTERNS } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
 const Pattern = () => {
   const id = useRouter().query.id
   const { push } = useRouter()
-  const { tempo } = useTempo()
 
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id },

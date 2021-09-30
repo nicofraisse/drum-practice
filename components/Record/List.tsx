@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
 import classNames from 'classnames'
-import { ratings } from 'data/ratings'
 import { format } from 'date-fns'
 import { DELETE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
 import { reverse } from 'lodash'
@@ -14,7 +13,6 @@ const RecordList = ({ patternId }) => {
     variables: { patternId: query.id },
     skip: !query.id
   })
-  console.log('pat id', patternId)
 
   const [deleteRecord] = useMutation(DELETE_RECORD, {
     refetchQueries: () => [
