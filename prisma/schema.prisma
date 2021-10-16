@@ -18,22 +18,23 @@ model Pattern {
   name              String
   description       String?
   score             String           @unique
-  themeId           Int?
   patternCategoryId Int?
   goalTempo         Int?
   startTempo        Int?
   bestTempo         Int?
   difficulty        Int?
+  isMain            Boolean?
   records           Record[]
-  Theme             Theme?           @relation(fields: [themeId], references: [id])
-  Category          PatternCategory? @relation(fields: [patternCategoryId], references: [id])
+  exercise          Exercise?        @relation(fields: [exerciseId], references: [id])
+  exerciseId        Int?
+  category          PatternCategory? @relation(fields: [patternCategoryId], references: [id])
 }
 
-model Theme {
+model Exercise {
   id          Int       @id @default(autoincrement())
   name        String    @unique
   description String?
-  category    String
+  category    String?
   patterns    Pattern[]
 }
 
@@ -42,6 +43,6 @@ model Record {
   tempo     Int
   rating    Int
   patternId Int
-  Pattern   Pattern  @relation(fields: [patternId], references: [id], onDelete: Cascade)
+  pattern   Pattern  @relation(fields: [patternId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("date")
 }

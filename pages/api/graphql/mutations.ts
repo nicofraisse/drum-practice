@@ -4,19 +4,38 @@ import { intArg, nonNull, objectType, stringArg } from 'nexus'
 const Mutations = objectType({
   name: 'Mutation',
   definition(t) {
+    t.field('createExercise', {
+      type: 'Exercise',
+      args: {
+        name: nonNull(stringArg()),
+        description: stringArg()
+      },
+      resolve: (_, { name, description }) => {
+        return prisma.exercise.create({
+          data: {
+            name,
+            description
+          }
+        })
+      }
+    })
     t.field('createPattern', {
       type: 'Pattern',
       args: {
-        name: nonNull(stringArg()),
-        score: nonNull(stringArg()),
-        description: stringArg()
+        name: stringArg(),
+        score: stringArg(),
+        description: stringArg(),
+        exerciseId: intArg(),
+        goalTempo: intArg(),
+        startTempo: intArg()
       },
-      resolve: (_, { name, score, description }) => {
+      resolve: (_, { name, score, description, exerciseId }, ctx) => {
         return prisma.pattern.create({
           data: {
             name,
             score,
-            description
+            description,
+            exerciseId
           }
         })
       }

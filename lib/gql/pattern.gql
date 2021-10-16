@@ -16,8 +16,18 @@ query GET_PATTERN($id: String!) {
   }
 }
 
-mutation CREATE_PATTERN($name: String!, $score: String!, $description: String) {
-  createPattern(name: $name, score: $score, description: $description) {
+mutation CREATE_PATTERN(
+  $name: String!
+  $score: String!
+  $description: String
+  $exerciseId: Int
+) {
+  createPattern(
+    name: $name
+    score: $score
+    description: $description
+    exerciseId: $exerciseId
+  ) {
     id
   }
 }

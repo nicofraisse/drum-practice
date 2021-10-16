@@ -5,14 +5,14 @@ import cors from 'micro-cors'
 import { asNexusMethod, makeSchema } from 'nexus'
 import path from 'path'
 
-import Models from './graphql/models'
+import Types from './graphql/types'
 import Mutations from './graphql/mutations'
 import Queries from './graphql/queries'
 
 export const DateTime = asNexusMethod(GraphQLDateTime, 'date')
 
 export const schema = makeSchema({
-  types: [...Models, Queries, Mutations, DateTime],
+  types: [...Types, Queries, Mutations, DateTime],
   outputs: {
     typegen: path.join(process.cwd(), 'generated/nexus-typegen.ts'),
     schema: path.join(process.cwd(), 'generated/schema.graphql')

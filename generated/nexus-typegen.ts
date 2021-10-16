@@ -43,13 +43,20 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Exercise: { // root type
+    description?: string | null; // String
+    id?: number | null; // Int
+    name?: string | null; // String
+  }
   Mutation: {};
   Pattern: { // root type
     bestTempo?: number | null; // Int
     description?: string | null; // String
+    goalTempo?: number | null; // Int
     id?: number | null; // Int
     name?: string | null; // String
     score?: string | null; // String
+    startTempo?: number | null; // Int
   }
   Query: {};
   Record: { // root type
@@ -72,7 +79,14 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Exercise: { // field return type
+    description: string | null; // String
+    id: number | null; // Int
+    name: string | null; // String
+    patterns: Array<NexusGenRootTypes['Pattern'] | null> | null; // [Pattern]
+  }
   Mutation: { // field return type
+    createExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
     createPattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     createRecord: NexusGenRootTypes['Record'] | null; // Record
     deletePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
@@ -82,11 +96,16 @@ export interface NexusGenFieldTypes {
   Pattern: { // field return type
     bestTempo: number | null; // Int
     description: string | null; // String
+    exercise: NexusGenRootTypes['Exercise'] | null; // Exercise
+    goalTempo: number | null; // Int
     id: number | null; // Int
     name: string | null; // String
     score: string | null; // String
+    startTempo: number | null; // Int
   }
   Query: { // field return type
+    exercise: NexusGenRootTypes['Exercise'] | null; // Exercise
+    exercises: Array<NexusGenRootTypes['Exercise'] | null> | null; // [Exercise]
     pattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     patterns: Array<NexusGenRootTypes['Pattern'] | null> | null; // [Pattern]
     records: Array<NexusGenRootTypes['Record'] | null> | null; // [Record]
@@ -102,7 +121,14 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Exercise: { // field return type name
+    description: 'String'
+    id: 'Int'
+    name: 'String'
+    patterns: 'Pattern'
+  }
   Mutation: { // field return type name
+    createExercise: 'Exercise'
     createPattern: 'Pattern'
     createRecord: 'Record'
     deletePattern: 'Pattern'
@@ -112,11 +138,16 @@ export interface NexusGenFieldTypeNames {
   Pattern: { // field return type name
     bestTempo: 'Int'
     description: 'String'
+    exercise: 'Exercise'
+    goalTempo: 'Int'
     id: 'Int'
     name: 'String'
     score: 'String'
+    startTempo: 'Int'
   }
   Query: { // field return type name
+    exercise: 'Exercise'
+    exercises: 'Exercise'
     pattern: 'Pattern'
     patterns: 'Pattern'
     records: 'Record'
@@ -133,10 +164,17 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createPattern: { // args
+    createExercise: { // args
       description?: string | null; // String
       name: string; // String!
-      score: string; // String!
+    }
+    createPattern: { // args
+      description?: string | null; // String
+      exerciseId?: number | null; // Int
+      goalTempo?: number | null; // Int
+      name?: string | null; // String
+      score?: string | null; // String
+      startTempo?: number | null; // Int
     }
     createRecord: { // args
       patternId: string; // String!
@@ -155,6 +193,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    exercise: { // args
+      id: string; // String!
+    }
     pattern: { // args
       id: string; // String!
     }

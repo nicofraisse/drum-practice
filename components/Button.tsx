@@ -2,7 +2,8 @@ import classNames from 'classnames'
 import ConditionalWrapper from 'components/ConditionalWrapper'
 import Link from 'next/link'
 
-const Button = ({ children, className, href, ...props }) => {
+const Button = ({ children, className, href, icon, ...props }) => {
+  const Icon = icon
   return (
     <ConditionalWrapper
       condition={href}
@@ -10,11 +11,12 @@ const Button = ({ children, className, href, ...props }) => {
     >
       <button
         className={classNames(
-          'py-1 px-3 bg-gray-100 hover:bg-gray-200 border rounded text-gray-600 hover:text-gray-700',
+          'flex items-center py-1 px-3 bg-gray-100 hover:bg-gray-200 border rounded text-gray-600 hover:text-gray-700',
           className
         )}
         {...props}
       >
+        {icon && <Icon size={18} className="mr-1" />}
         {children}
       </button>
     </ConditionalWrapper>

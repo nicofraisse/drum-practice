@@ -7,8 +7,16 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type Exercise {
+  description: String
+  id: Int
+  name: String
+  patterns: [Pattern]
+}
+
 type Mutation {
-  createPattern(description: String, name: String!, score: String!): Pattern
+  createExercise(description: String, name: String!): Exercise
+  createPattern(description: String, exerciseId: Int, goalTempo: Int, name: String, score: String, startTempo: Int): Pattern
   createRecord(patternId: String!, rating: Int!, tempo: Int!): Record
   deletePattern(patternId: String!): Pattern
   deleteRecord(recordId: Int!): Record
@@ -18,12 +26,17 @@ type Mutation {
 type Pattern {
   bestTempo: Int
   description: String
+  exercise: Exercise
+  goalTempo: Int
   id: Int
   name: String
   score: String
+  startTempo: Int
 }
 
 type Query {
+  exercise(id: String!): Exercise
+  exercises: [Exercise]
   pattern(id: String!): Pattern
   patterns: [Pattern]
   records(patternId: String!): [Record]

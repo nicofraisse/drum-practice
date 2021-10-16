@@ -1,0 +1,28 @@
+query GET_EXERCISES {
+  exercises {
+    id
+    name
+  }
+}
+query GET_EXERCISE($id: String!) {
+  exercise(id: $id) {
+    id
+    name
+    description
+    patterns {
+      id
+      name
+      score
+      description
+      bestTempo
+      goalTempo
+      startTempo
+    }
+  }
+}
+
+mutation CREATE_EXERCISE($name: String!, $description: String) {
+  createExercise(name: $name, description: $description) {
+    id
+  }
+}

@@ -12,7 +12,7 @@ CREATE TABLE "Pattern" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "score" TEXT NOT NULL,
-    "themeId" INTEGER,
+    "exerciseId" INTEGER,
     "patternCategoryId" INTEGER,
     "goalTempo" INTEGER,
     "startTempo" INTEGER,
@@ -23,13 +23,13 @@ CREATE TABLE "Pattern" (
 );
 
 -- CreateTable
-CREATE TABLE "Theme" (
+CREATE TABLE "Exercise" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "category" TEXT NOT NULL,
 
-    CONSTRAINT "Theme_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Exercise_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -47,19 +47,16 @@ CREATE TABLE "Record" (
 CREATE UNIQUE INDEX "PatternCategory_name_key" ON "PatternCategory"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Pattern_description_key" ON "Pattern"("description");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Pattern_score_key" ON "Pattern"("score");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Theme_name_key" ON "Theme"("name");
+CREATE UNIQUE INDEX "Exercise_name_key" ON "Exercise"("name");
 
 -- AddForeignKey
-ALTER TABLE "Pattern" ADD CONSTRAINT "Pattern_themeId_fkey" FOREIGN KEY ("themeId") REFERENCES "Theme"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Pattern" ADD CONSTRAINT "Pattern_exerciseId_fkey" FOREIGN KEY ("exerciseId") REFERENCES "Exercise"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Pattern" ADD CONSTRAINT "Pattern_patternCategoryId_fkey" FOREIGN KEY ("patternCategoryId") REFERENCES "PatternCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Record" ADD CONSTRAINT "Record_patternId_fkey" FOREIGN KEY ("patternId") REFERENCES "Pattern"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Record" ADD CONSTRAINT "Record_patternId_fkey" FOREIGN KEY ("patternId") REFERENCES "Pattern"("id") ON DELETE CASCADE ON UPDATE CASCADE;

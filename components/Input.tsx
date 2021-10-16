@@ -13,7 +13,7 @@ const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
     return (
       <textarea
         value={value || ''}
-        className={classNames('border rounded px-2 py-1', className)}
+        className={classNames('w-full border rounded px-2 py-1', className)}
         placeholder={placeholder}
         {...props}
       />
@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = ({ className, value, type, ...props }) => {
     <input
       type={type}
       value={value || ''}
-      className={classNames('border rounded px-2 py-1', className)}
+      className={classNames('w-full border rounded px-2 py-1', className)}
       placeholder={placeholder}
       {...props}
     />

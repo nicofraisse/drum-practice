@@ -1,21 +1,25 @@
 import { useQuery } from '@apollo/client'
-import Card from 'components/Card'
 import Container from 'components/Container'
-import PatternCreate from 'components/Pattern/Create'
-import PatternList from 'components/Pattern/List'
-import { GET_PATTERNS } from 'lib/gql/pattern.gql'
-
+import { GET_EXERCISES } from 'lib/gql/exercise.gql'
+import ExerciseList from 'components/Exercise/List'
+import Button from 'components/Button'
+import { PlusSquare } from 'react-feather'
 export default function Home() {
-  const { loading, error, data } = useQuery(GET_PATTERNS)
+  const { loading, error, data } = useQuery(GET_EXERCISES)
 
   if (error) return error.message
   if (loading) return 'loading'
 
   return (
-    <Container>
-      <Card>Go back to where you left off</Card>
-      <PatternList patterns={data.patterns} refetchQueries={[GET_PATTERNS]} />
-      <PatternCreate refetchQueries={[GET_PATTERNS]} />
+    <Container width="max-w-4xl">
+      <div className="bg-gray-500 mb-2 p-3 flex justify-between">
+        <Button>Expand all</Button>
+        <Button icon={PlusSquare} href="/exercises/new">
+          New Exercise
+        </Button>
+      </div>
+
+      <ExerciseList exercises={data.exercises} />
     </Container>
   )
 }

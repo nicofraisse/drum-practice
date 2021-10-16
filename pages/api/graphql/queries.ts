@@ -10,6 +10,23 @@ const Queries = objectType({
         return prisma.pattern.findMany({})
       }
     })
+    t.list.field('exercises', {
+      type: 'Exercise',
+      resolve: () => {
+        return prisma.exercise.findMany({})
+      }
+    })
+    t.field('exercise', {
+      type: 'Exercise',
+      args: { id: nonNull(stringArg()) },
+      resolve: (_, args) => {
+        return prisma.exercise.findUnique({
+          where: {
+            id: Number(args.id)
+          }
+        })
+      }
+    })
     t.field('pattern', {
       type: 'Pattern',
       args: { id: nonNull(stringArg()) },

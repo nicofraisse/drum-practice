@@ -1,6 +1,24 @@
 import prisma from 'lib/prisma'
 import { objectType } from 'nexus'
 
+const Exercise = objectType({
+  name: 'Exercise',
+  definition(t) {
+    t.int('id')
+    t.string('name')
+    t.string('description')
+    t.list.field('patterns', {
+      type: 'Pattern',
+      resolve: (parent) =>
+        prisma.exercise
+          .findUnique({
+            where: { id: Number(parent.id) }
+          })
+          .patterns()
+    })
+  }
+})
+
 const Pattern = objectType({
   name: 'Pattern',
   definition(t) {
@@ -9,6 +27,17 @@ const Pattern = objectType({
     t.string('description')
     t.string('score')
     t.int('bestTempo')
+    t.int('goalTempo')
+    t.int('startTempo')
+    t.nullable.field('exercise', {
+      type: 'Exercise',
+      resolve: (parent) =>
+        prisma.pattern
+          .findUnique({
+            where: { id: Number(parent.id) }
+          })
+          .exercise()
+    })
   }
 })
 
@@ -34,4 +63,4 @@ const Record = objectType({
   }
 })
 
-export default [Pattern, Record]
+export default [Pattern, Exercise, Record]
