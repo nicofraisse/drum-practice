@@ -10,18 +10,32 @@ const TempoContext = createContext({})
 const TempoProvider = ({ children }) => {
   const [tempo, setTempo] = useState(120)
   const [isRunning, setIsRunning] = useState(false)
-  const [timer, setTimer] = useState(0)
+  const [isPracticing, setIsPracticing] = useState(false)
+  const [timer, setTimer] = useState(10)
+  const [done, setDone] = useState(false)
 
   const increaseTempo = () => increase(tempo, setTempo)
   const decreaseTempo = () => decrease(tempo, setTempo)
   const [playSound] = useSound('/sounds/tick.mp3', { volume: 1 })
 
-  const start = () => {
-    setTimer(0)
+  const startMetronome = () => {
     setIsRunning(true)
   }
-  const stop = () => {
+
+  const stopMetronome = () => {
     setIsRunning(false)
+  }
+
+  const startPractice = () => {
+    setTimer(10)
+    startMetronome()
+    setIsPracticing(true)
+    setDone(false)
+  }
+  const stopPractice = () => {
+    setTimer(10)
+    stopMetronome()
+    setIsPracticing(false)
   }
 
   let tempoInterval
@@ -40,15 +54,22 @@ const TempoProvider = ({ children }) => {
   }, [isRunning, tempo])
 
   useEffect(() => {
-    if (isRunning) {
+    if (isPracticing) {
       timerInterval = setInterval(() => {
-        setTimer(timer + 1)
+        if (timer > 0) {
+          setTimer(timer - 1)
+        }
+        if (timer === 0) {
+          stopPractice()
+          stopMetronome()
+          setDone(true)
+        }
       }, 1000)
     }
     return () => {
       clearInterval(timerInterval)
     }
-  }, [timer, isRunning])
+  }, [timer, isPracticing])
 
   return (
     <TempoContext.Provider
@@ -56,9 +77,13 @@ const TempoProvider = ({ children }) => {
         tempo,
         increaseTempo,
         decreaseTempo,
-        start,
-        stop,
+        startMetronome,
+        stopMetronome,
+        startPractice,
+        stopPractice,
         isRunning,
+        isPracticing,
+        done,
         timer
       }}
     >

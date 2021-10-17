@@ -3,16 +3,16 @@ import { Edit2, Play } from 'react-feather'
 
 const ExerciseCard = ({ exercise, number }) => {
   return (
-    <div className="bg-green-500 text-white mb-5 shadow rounded-xl">
+    <div className="bg-gray-500 text-white mb-5 shadow rounded-xl">
       <div className="flex">
         <div className="p-5 flex-1">
           <div className="flex items-center">
-            <div className="text-2xl cursor-default select-none font-bold text-green-600 rounded-full w-10 h-10 bg-white items-center justify-center flex">
+            <div className="text-2xl cursor-default select-none font-bold text-gray-600 rounded-full w-10 h-10 bg-white items-center justify-center flex">
               {number}
             </div>
             <div className="font-bold text-lg pl-4">{exercise.name}</div>
           </div>
-          <div className="h-[2px] mt-3 mb-1 bg-green-800"></div>
+          <div className="h-[2px] mt-3 mb-1 bg-gray-800"></div>
           <div className="flex justify-between">
             <div className="text-sm">Avg tempo: 121 (+5%)</div>
             <div className="text-sm">Avg tempo: 121 (+5%)</div>

@@ -1,77 +1,71 @@
-import { useMutation } from '@apollo/client'
-import Button from 'components/Button'
-import Card from 'components/Card'
-import Score from 'components/Pattern/Score'
-import { GET_PATTERN, UPDATE_PATTERN_BEST_TEMPO } from 'lib/gql/pattern.gql'
+import React from 'react'
+import ScoreBoxes from 'components/Score/ScoreBoxes'
+import classNames from 'classnames'
+import TempoAcheivement from 'components/Pattern/TempoAcheivement'
+import { useState, useEffect } from 'react'
+import PracticeControls from 'components/Pattern/PracticeControls'
 import { useTempo } from 'lib/TempoContext'
-import { Edit, Trash } from 'react-feather'
+import { MinusCircle, Pause, Play, PlusCircle } from 'react-feather'
 
-const PatternCard = ({ pattern, collapsed, page, handleDelete }) => {
-  const { tempo } = useTempo()
-  const [updatePatternBestTempo] = useMutation(UPDATE_PATTERN_BEST_TEMPO, {
-    refetchQueries: () => [
-      { query: GET_PATTERN, variables: { id: pattern.id.toString() } }
-    ]
-  })
-
-  const handleUpdateBestTempo = () => {
-    updatePatternBestTempo({ variables: { id: pattern.id.toString(), tempo } })
-  }
-
-  if (collapsed)
-    return (
-      <Card
-        key={pattern.id}
-        className="border border-gray p-4 my-3 flex justify-between shadow-none"
-      >
-        <div className="flex items-center">
-          <div className="mr-5 bg-yellow-200 py-1 px-5 rounded">
-            {pattern.name}
-          </div>
-          <div className="mr-5 bg-green-200 py-1 px-5 rounded">
-            {pattern.bestTempo}
-          </div>
-        </div>
-        <div className="flex">
-          <Button href={`/patterns/${pattern.id}`} className="mr-2">
-            View
-          </Button>
-          <Button href={`/patterns/${pattern.id}/practice`}>Practice</Button>
-        </div>
-      </Card>
-    )
-
+const Card = ({ pattern, isSelected, setSelected }) => {
+  const {
+    timer,
+    startPractice,
+    stopPractice,
+    prepareTimer,
+    isPracticing,
+    done
+  } = useTempo()
   return (
-    <Card className="relative">
-      {page === 'show' && (
-        <>
-          <Button
-            className="absolute right-[16px]"
-            href={`/patterns/${pattern.id}/practice`}
-          >
-            Practice Now
-          </Button>
-          <Button className="absolute right-[16px] top-[58px]">
-            <Trash onClick={handleDelete} />
-          </Button>
-          <Button className="absolute right-[76px] top-[58px]">
-            <Edit />
-          </Button>
-        </>
-      )}
+    <>
+      {done && <div className="bg-white text-black">Hey</div>}
+      <div
+        key={pattern.id}
+        className={classNames(
+          'shadow- bg-gray-500 p-4 rounded-lg mt-6 cursor-pointer hover:opacity-90 transition duration-150 select-none',
+          {
+            'shadow-lg ring-4 ring-green-200 ring-offset-red-100': isSelected
+          }
+        )}
+        onClick={() => setSelected(pattern.id)}
+      >
+        <div className="flex">
+          <div className="w-3/4">
+            <div className="text-2xl font-bold">{pattern.name}</div>
+            <div className="text-gray-100">{pattern.description}</div>
+          </div>
 
-      <h1 className="font-bold text-lg">{pattern.name}</h1>
-      <p className="text-gray-600 mb-2">{pattern.description}</p>
-      {page === 'practice' && (
-        <div className="mb-2">
-          Best tempo: {pattern.bestTempo}{' '}
-          <Button onClick={handleUpdateBestTempo}>Set current</Button>
+          <div className="flex-grow">
+            {isSelected && (
+              <>
+                <PracticeControls time={timer} />
+                <div className="flex justify-end">
+                  <div
+                    onClick={isPracticing ? stopPractice : startPractice}
+                    className="border-2 border-green-300 bg-green-400 bg-opacity-0 text-green-200 px-4 py-1 rounded-lg text-lg font-bold hover:bg-opacity-10 transition duration-150 hover:shadow-xl"
+                  >
+                    {isPracticing ? 'Stop' : 'Start'}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      )}
+        {prepareTimer}
 
-      <Score pattern={pattern} />
-    </Card>
+        <div className="py-4">
+          <ScoreBoxes score={pattern.score} />
+        </div>
+        <div className="flex justify-between mb-2">
+          <TempoAcheivement
+            min={pattern.startTempo}
+            max={pattern.goalTempo}
+            current={pattern.bestTempo}
+          />
+        </div>
+      </div>
+    </>
   )
 }
 
-export default PatternCard
+export default Card

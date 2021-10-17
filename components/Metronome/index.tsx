@@ -4,7 +4,12 @@ import { MinusCircle, Pause, Play, PlusCircle } from 'react-feather'
 
 const TempoControl = ({ type, disabled }) => {
   const { increaseTempo, decreaseTempo } = useTempo()
-  const icon = type === 'increase' ? <PlusCircle /> : <MinusCircle />
+  const icon =
+    type === 'increase' ? (
+      <PlusCircle size={32} className="text-gray-400" />
+    ) : (
+      <MinusCircle size={32} className="text-gray-400" />
+    )
   const action = type === 'increase' ? increaseTempo : decreaseTempo
 
   return (
@@ -21,7 +26,7 @@ const TempoControl = ({ type, disabled }) => {
 }
 
 const Metronome = () => {
-  const { tempo, start, stop, isRunning } = useTempo()
+  const { tempo, startMetronome, stopMetronome, isRunning } = useTempo()
   const Icon = isRunning ? (
     <Pause color="white" fill="white" />
   ) : (
@@ -30,14 +35,14 @@ const Metronome = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex w-24 justify-between mb-3">
+      <div className="flex justify-between items-center mb-3">
         <TempoControl type="decrease" disabled={tempo <= 40} />
-        <div>{tempo}</div>
+        <div className="font-black text-2xl mx-3 text-white">{tempo}</div>
         <TempoControl type="increase" disabled={tempo >= 240} />
       </div>
       <div
         className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center cursor-pointer hover:opacity-80"
-        onClick={isRunning ? stop : start}
+        onClick={isRunning ? stopMetronome : startMetronome}
       >
         {Icon}
       </div>

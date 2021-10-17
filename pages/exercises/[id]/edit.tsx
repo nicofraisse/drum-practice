@@ -9,7 +9,7 @@ import { GET_EXERCISE } from 'lib/gql/exercise.gql'
 import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { Edit, PlusCircle, Trash } from 'react-feather'
+import { Edit as EditIcon, PlusCircle, Trash } from 'react-feather'
 import { toast } from 'react-toastify'
 
 const PatternEditCard = ({ pattern, handleDeletePattern }) => {
@@ -126,7 +126,7 @@ const Edit = () => {
         <Card className="mt-5 max-w-md mx-auto relative">
           <div className="font-bold text-2xl">{data.exercise.name}</div>
           <div className="pt-4">{data.exercise.description}</div>
-          <Edit className="cursor-pointer opacity-30 hover:opacity-70 absolute top-4 right-4 transition dutation-150" />
+          <EditIcon className="cursor-pointer opacity-30 hover:opacity-70 absolute top-4 right-4 transition dutation-150" />
         </Card>
         <div className="flex flex-col items-center">
           {data.exercise.patterns.map((pattern) => (

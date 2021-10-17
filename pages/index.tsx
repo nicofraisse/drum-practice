@@ -12,8 +12,7 @@ export default function Home() {
 
   return (
     <Container width="max-w-4xl">
-      <div className="bg-gray-500 mb-2 p-3 flex justify-between">
-        <Button>Expand all</Button>
+      <div className="mb-5 flex justify-between">
         <Button icon={PlusSquare} href="/exercises/new">
           New Exercise
         </Button>
