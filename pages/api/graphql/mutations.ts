@@ -29,13 +29,18 @@ const Mutations = objectType({
         goalTempo: intArg(),
         startTempo: intArg()
       },
-      resolve: (_, { name, score, description, exerciseId }, ctx) => {
+      resolve: (
+        _,
+        { name, score, description, exerciseId, startTempo, goalTempo }
+      ) => {
         return prisma.pattern.create({
           data: {
             name,
             score,
             description,
-            exerciseId
+            exerciseId,
+            startTempo,
+            goalTempo
           }
         })
       }
@@ -43,11 +48,11 @@ const Mutations = objectType({
     t.nullable.field('deletePattern', {
       type: 'Pattern',
       args: {
-        patternId: nonNull(stringArg())
+        patternId: nonNull(intArg())
       },
       resolve: (_, { patternId }) => {
         return prisma.pattern.delete({
-          where: { id: Number(patternId) }
+          where: { id: patternId }
         })
       }
     })

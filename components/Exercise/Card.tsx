@@ -1,5 +1,5 @@
 import Button from 'components/Button'
-import { Play, Edit, Edit2, Edit3 } from 'react-feather'
+import { Edit2, Play } from 'react-feather'
 
 const ExerciseCard = ({ exercise, number }) => {
   return (

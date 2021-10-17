@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
-import Container from 'components/Container'
-import { GET_EXERCISES } from 'lib/gql/exercise.gql'
-import ExerciseList from 'components/Exercise/List'
 import Button from 'components/Button'
+import Container from 'components/Container'
+import ExerciseList from 'components/Exercise/List'
+import { GET_EXERCISES } from 'lib/gql/exercise.gql'
 import { PlusSquare } from 'react-feather'
 export default function Home() {
   const { loading, error, data } = useQuery(GET_EXERCISES)

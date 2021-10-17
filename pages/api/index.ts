@@ -5,9 +5,9 @@ import cors from 'micro-cors'
 import { asNexusMethod, makeSchema } from 'nexus'
 import path from 'path'
 
-import Types from './graphql/types'
 import Mutations from './graphql/mutations'
 import Queries from './graphql/queries'
+import Types from './graphql/types'
 
 export const DateTime = asNexusMethod(GraphQLDateTime, 'date')
 

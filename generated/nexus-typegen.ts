@@ -182,7 +182,7 @@ export interface NexusGenArgTypes {
       tempo: number; // Int!
     }
     deletePattern: { // args
-      patternId: string; // String!
+      patternId: number; // Int!
     }
     deleteRecord: { // args
       recordId: number; // Int!

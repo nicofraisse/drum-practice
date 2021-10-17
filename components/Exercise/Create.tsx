@@ -3,12 +3,12 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import Field from 'components/Field'
 import { Form } from 'components/Form'
+import PatternFields from 'components/Pattern/Fields'
 import { CREATE_EXERCISE } from 'lib/gql/exercise.gql'
 import { CREATE_PATTERN } from 'lib/gql/pattern.gql'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
-import PatternFields from 'components/Pattern/Fields'
 
 const PatternCreate = ({ refetchQueries, redirect }) => {
   const [createPattern] = useMutation(CREATE_PATTERN, {
@@ -36,7 +36,6 @@ const PatternCreate = ({ refetchQueries, redirect }) => {
         push(redirect)
       }
     } catch (e) {
-      console.log({ e })
       toast.error('Could not create exercise')
     }
   }
@@ -48,7 +47,8 @@ const PatternCreate = ({ refetchQueries, redirect }) => {
           score: '',
           name: '',
           description: '',
-          startTempo: ''
+          startTempo: '',
+          goalTempo: ''
         }}
         onSubmit={handleSubmit}
       >

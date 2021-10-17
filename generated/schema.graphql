@@ -18,7 +18,7 @@ type Mutation {
   createExercise(description: String, name: String!): Exercise
   createPattern(description: String, exerciseId: Int, goalTempo: Int, name: String, score: String, startTempo: Int): Pattern
   createRecord(patternId: String!, rating: Int!, tempo: Int!): Record
-  deletePattern(patternId: String!): Pattern
+  deletePattern(patternId: Int!): Pattern
   deleteRecord(recordId: Int!): Record
   updatePattern(id: String!, tempo: Int!): Pattern
 }

@@ -1,5 +1,5 @@
-import ExerciseCreate from 'components/Exercise/Create'
 import Container from 'components/Container'
+import ExerciseCreate from 'components/Exercise/Create'
 
 const NewExercise = () => {
   return (

@@ -20,6 +20,8 @@ mutation CREATE_PATTERN(
   $name: String!
   $score: String!
   $description: String
+  $startTempo: Int
+  $goalTempo: Int
   $exerciseId: Int
 ) {
   createPattern(
@@ -27,6 +29,8 @@ mutation CREATE_PATTERN(
     score: $score
     description: $description
     exerciseId: $exerciseId
+    startTempo: $startTempo
+    goalTempo: $goalTempo
   ) {
     id
   }
@@ -38,7 +42,7 @@ mutation UPDATE_PATTERN_BEST_TEMPO($id: String!, $tempo: Int!) {
   }
 }
 
-mutation DELETE_PATTERN($patternId: String!) {
+mutation DELETE_PATTERN($patternId: Int!) {
   deletePattern(patternId: $patternId) {
     id
   }
