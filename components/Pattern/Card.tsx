@@ -9,13 +9,24 @@ import { MinusCircle, Pause, Play, PlusCircle } from 'react-feather'
 
 const Card = ({ pattern, isSelected, setSelected }) => {
   const {
-    timer,
     startPractice,
     stopPractice,
-    prepareTimer,
     isPracticing,
-    done
+    startMetronome,
+    done,
+    preparing,
+    setPreparing,
+    timer
   } = useTempo()
+  const handleStart = () => {
+    startMetronome()
+    setPreparing(true)
+    setTimeout(() => {
+      startPractice()
+      setPreparing(false)
+    }, 3000)
+  }
+  const [countdown, setCountdown] = useState(0)
   return (
     <>
       {done && <div className="bg-white text-black">Hey</div>}
@@ -24,7 +35,9 @@ const Card = ({ pattern, isSelected, setSelected }) => {
         className={classNames(
           'shadow- bg-gray-500 p-4 rounded-lg mt-6 cursor-pointer hover:opacity-90 transition duration-150 select-none',
           {
-            'shadow-lg ring-4 ring-green-200 ring-offset-red-100': isSelected
+            'shadow-lg ring-4 ring-green-200 ring-offset-red-100': isSelected,
+            'opacity-50 pointer-events-none':
+              !isSelected && (isPracticing || preparing)
           }
         )}
         onClick={() => setSelected(pattern.id)}
@@ -38,31 +51,38 @@ const Card = ({ pattern, isSelected, setSelected }) => {
           <div className="flex-grow">
             {isSelected && (
               <>
-                <PracticeControls time={timer} />
                 <div className="flex justify-end">
                   <div
-                    onClick={isPracticing ? stopPractice : startPractice}
+                    onClick={isPracticing ? stopPractice : handleStart}
                     className="border-2 border-green-300 bg-green-400 bg-opacity-0 text-green-200 px-4 py-1 rounded-lg text-lg font-bold hover:bg-opacity-10 transition duration-150 hover:shadow-xl"
                   >
-                    {isPracticing ? 'Stop' : 'Start'}
+                    {preparing
+                      ? 'Get ready...'
+                      : isPracticing
+                      ? 'Stop'
+                      : 'Start'}
                   </div>
                 </div>
               </>
             )}
           </div>
         </div>
-        {prepareTimer}
 
         <div className="py-4">
           <ScoreBoxes score={pattern.score} />
         </div>
-        <div className="flex justify-between mb-2">
+
+        {!isPracticing && (
           <TempoAcheivement
             min={pattern.startTempo}
             max={pattern.goalTempo}
             current={pattern.bestTempo}
           />
-        </div>
+        )}
+
+        {isSelected && isPracticing && (
+          <PracticeControls time={timer} preparing={preparing} />
+        )}
       </div>
     </>
   )

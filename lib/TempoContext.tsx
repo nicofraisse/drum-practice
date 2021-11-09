@@ -11,8 +11,9 @@ const TempoProvider = ({ children }) => {
   const [tempo, setTempo] = useState(120)
   const [isRunning, setIsRunning] = useState(false)
   const [isPracticing, setIsPracticing] = useState(false)
-  const [timer, setTimer] = useState(10)
+  const [timer, setTimer] = useState(60)
   const [done, setDone] = useState(false)
+  const [preparing, setPreparing] = useState(false)
 
   const increaseTempo = () => increase(tempo, setTempo)
   const decreaseTempo = () => decrease(tempo, setTempo)
@@ -27,13 +28,13 @@ const TempoProvider = ({ children }) => {
   }
 
   const startPractice = () => {
-    setTimer(10)
+    setTimer(60)
     startMetronome()
     setIsPracticing(true)
     setDone(false)
   }
   const stopPractice = () => {
-    setTimer(10)
+    setTimer(60)
     stopMetronome()
     setIsPracticing(false)
   }
@@ -83,6 +84,8 @@ const TempoProvider = ({ children }) => {
         stopPractice,
         isRunning,
         isPracticing,
+        preparing,
+        setPreparing,
         done,
         timer
       }}
