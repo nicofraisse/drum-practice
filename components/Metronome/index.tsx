@@ -26,7 +26,33 @@ const TempoControl = ({ type, disabled }) => {
 }
 
 const Metronome = () => {
-  const { tempo, startMetronome, stopMetronome, isRunning } = useTempo()
+  const {
+    tempo,
+    startMetronome,
+    stopMetronome,
+    practiceMode,
+    isRunning,
+    isPracticing,
+    stopPractice,
+    startPractice
+  } = useTempo()
+
+  const handleClick = () => {
+    if (practiceMode) {
+      if (isPracticing) {
+        stopPractice()
+      } else {
+        startPractice()
+      }
+    } else {
+      if (isRunning) {
+        stopMetronome()
+      } else {
+        startMetronome()
+      }
+    }
+  }
+
   const Icon = isRunning ? (
     <Pause color="white" fill="white" />
   ) : (
@@ -42,7 +68,7 @@ const Metronome = () => {
       </div>
       <div
         className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center cursor-pointer hover:opacity-80"
-        onClick={isRunning ? stopMetronome : startMetronome}
+        onClick={handleClick}
       >
         {Icon}
       </div>

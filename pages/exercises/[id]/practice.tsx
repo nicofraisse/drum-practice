@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import Container from 'components/Container'
 import { GET_EXERCISE } from 'lib/gql/exercise.gql'
 import { useRouter } from 'next/router'
-import React from 'react'
 import { useState, useEffect } from 'react'
 import PracticeCard from 'components/Pattern/Card'
 

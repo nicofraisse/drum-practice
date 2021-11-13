@@ -80,7 +80,16 @@ const Mutations = objectType({
             }
           })
         }
-
+        if (!pattern.fastestTempo || pattern.fastestTempo < tempo) {
+          await prisma.pattern.update({
+            where: {
+              id: Number(patternId)
+            },
+            data: {
+              fastestTempo: tempo
+            }
+          })
+        }
         return prisma.record.create({
           data: {
             tempo,

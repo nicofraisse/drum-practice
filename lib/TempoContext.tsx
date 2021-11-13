@@ -8,15 +8,18 @@ import { useSound } from 'use-sound'
 const TempoContext = createContext({})
 
 const TempoProvider = ({ children }) => {
+  const PRACTICE_DURATION = 4
   const [tempo, setTempo] = useState(120)
   const [isRunning, setIsRunning] = useState(false)
   const [isPracticing, setIsPracticing] = useState(false)
-  const [timer, setTimer] = useState(60)
+  const [timer, setTimer] = useState(PRACTICE_DURATION)
   const [done, setDone] = useState(false)
   const [preparing, setPreparing] = useState(false)
+  const [practiceMode, setPracticeMode] = useState(true)
 
   const increaseTempo = () => increase(tempo, setTempo)
   const decreaseTempo = () => decrease(tempo, setTempo)
+
   const [playSound] = useSound('/sounds/tick.mp3', { volume: 1 })
 
   const startMetronome = () => {
@@ -28,13 +31,13 @@ const TempoProvider = ({ children }) => {
   }
 
   const startPractice = () => {
-    setTimer(60)
+    setTimer(PRACTICE_DURATION)
     startMetronome()
     setIsPracticing(true)
     setDone(false)
   }
   const stopPractice = () => {
-    setTimer(60)
+    setTimer(PRACTICE_DURATION)
     stopMetronome()
     setIsPracticing(false)
   }
@@ -72,6 +75,8 @@ const TempoProvider = ({ children }) => {
     }
   }, [timer, isPracticing])
 
+  console.log('the tempo', tempo)
+
   return (
     <TempoContext.Provider
       value={{
@@ -82,6 +87,8 @@ const TempoProvider = ({ children }) => {
         stopMetronome,
         startPractice,
         stopPractice,
+        practiceMode,
+        setPracticeMode,
         isRunning,
         isPracticing,
         preparing,

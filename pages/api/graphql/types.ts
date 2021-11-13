@@ -26,7 +26,9 @@ const Pattern = objectType({
     t.string('name')
     t.string('description')
     t.string('score')
+    t.int('fastestTempo')
     t.int('bestTempo')
+    t.int('fastestTempo')
     t.int('goalTempo')
     t.int('startTempo')
     t.nullable.field('exercise', {

@@ -22,6 +22,7 @@ model Pattern {
   goalTempo         Int?
   startTempo        Int?
   bestTempo         Int?
+  fastestTempo      Int?
   difficulty        Int?
   isMain            Boolean?
   records           Record[]

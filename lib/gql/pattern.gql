@@ -4,6 +4,7 @@ query GET_PATTERNS {
     name
     score
     bestTempo
+    fastestTempo
   }
 }
 query GET_PATTERN($id: String!) {
@@ -13,6 +14,7 @@ query GET_PATTERN($id: String!) {
     description
     score
     bestTempo
+    fastestTempo
   }
 }
 

@@ -52,6 +52,7 @@ export interface NexusGenObjects {
   Pattern: { // root type
     bestTempo?: number | null; // Int
     description?: string | null; // String
+    fastestTempo?: number | null; // Int
     goalTempo?: number | null; // Int
     id?: number | null; // Int
     name?: string | null; // String
@@ -97,6 +98,7 @@ export interface NexusGenFieldTypes {
     bestTempo: number | null; // Int
     description: string | null; // String
     exercise: NexusGenRootTypes['Exercise'] | null; // Exercise
+    fastestTempo: number | null; // Int
     goalTempo: number | null; // Int
     id: number | null; // Int
     name: string | null; // String
@@ -139,6 +141,7 @@ export interface NexusGenFieldTypeNames {
     bestTempo: 'Int'
     description: 'String'
     exercise: 'Exercise'
+    fastestTempo: 'Int'
     goalTempo: 'Int'
     id: 'Int'
     name: 'String'

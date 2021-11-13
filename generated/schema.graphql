@@ -27,6 +27,7 @@ type Pattern {
   bestTempo: Int
   description: String
   exercise: Exercise
+  fastestTempo: Int
   goalTempo: Int
   id: Int
   name: String

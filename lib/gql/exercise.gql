@@ -15,6 +15,7 @@ query GET_EXERCISE($id: String!) {
       score
       description
       bestTempo
+      fastestTempo
       goalTempo
       startTempo
     }
