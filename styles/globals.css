@@ -15,3 +15,8 @@
 .table-layout th {
   padding: 8px 24px;
 }
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 0.85em;
+}

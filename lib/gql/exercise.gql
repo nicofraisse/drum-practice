@@ -27,3 +27,15 @@ mutation CREATE_EXERCISE($name: String!, $description: String) {
     id
   }
 }
+
+mutation DELETE_EXERCISE($exerciseId: Int!) {
+  deleteExercise(exerciseId: $exerciseId) {
+    id
+  }
+}
+
+mutation RENAME_EXERCISE($id: String!, $name: String) {
+  updateExercise(id: $id, name: $name) {
+    id
+  }
+}

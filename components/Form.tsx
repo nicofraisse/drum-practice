@@ -24,3 +24,5 @@ export const Form = ({
     </FormContext.Provider>
   )
 }
+
+export default Form

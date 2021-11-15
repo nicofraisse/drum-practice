@@ -7,7 +7,7 @@ const Mutations = objectType({
     t.field('createExercise', {
       type: 'Exercise',
       args: {
-        name: nonNull(stringArg()),
+        name: stringArg(),
         description: stringArg()
       },
       resolve: (_, { name, description }) => {
@@ -53,6 +53,17 @@ const Mutations = objectType({
       resolve: (_, { patternId }) => {
         return prisma.pattern.delete({
           where: { id: patternId }
+        })
+      }
+    })
+    t.nullable.field('deleteExercise', {
+      type: 'Exercise',
+      args: {
+        exerciseId: nonNull(intArg())
+      },
+      resolve: (_, { exerciseId }) => {
+        return prisma.exercise.delete({
+          where: { id: exerciseId }
         })
       }
     })
@@ -103,12 +114,41 @@ const Mutations = objectType({
       type: 'Pattern',
       args: {
         id: nonNull(stringArg()),
-        tempo: nonNull(intArg())
+        name: stringArg(),
+        description: stringArg(),
+        score: stringArg(),
+        tempo: intArg(),
+        startTempo: intArg(),
+        goalTempo: intArg()
       },
-      resolve: (_, { id, tempo }) => {
+      resolve: (
+        _,
+        { id, tempo, name, score, startTempo, goalTempo, description }
+      ) => {
         return prisma.pattern.update({
           where: { id: Number(id) },
-          data: { bestTempo: tempo }
+          data: {
+            bestTempo: tempo,
+            name,
+            score,
+            startTempo,
+            goalTempo,
+            description
+          }
+        })
+      }
+    })
+    t.nullable.field('updateExercise', {
+      type: 'Exercise',
+      args: {
+        id: nonNull(stringArg()),
+        name: stringArg(),
+        description: stringArg()
+      },
+      resolve: (_, { id, name, description }) => {
+        return prisma.exercise.update({
+          where: { id: Number(id) },
+          data: { name, description }
         })
       }
     })

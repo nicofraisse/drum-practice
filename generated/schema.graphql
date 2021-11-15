@@ -15,12 +15,14 @@ type Exercise {
 }
 
 type Mutation {
-  createExercise(description: String, name: String!): Exercise
+  createExercise(description: String, name: String): Exercise
   createPattern(description: String, exerciseId: Int, goalTempo: Int, name: String, score: String, startTempo: Int): Pattern
   createRecord(patternId: String!, rating: Int!, tempo: Int!): Record
+  deleteExercise(exerciseId: Int!): Exercise
   deletePattern(patternId: Int!): Pattern
   deleteRecord(recordId: Int!): Record
-  updatePattern(id: String!, tempo: Int!): Pattern
+  updateExercise(description: String, id: String!, name: String): Exercise
+  updatePattern(description: String, goalTempo: Int, id: String!, name: String, score: String, startTempo: Int, tempo: Int): Pattern
 }
 
 type Pattern {

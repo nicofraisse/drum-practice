@@ -14,6 +14,7 @@ query GET_PATTERN($id: String!) {
     description
     score
     bestTempo
+    goalTempo
     fastestTempo
   }
 }
@@ -41,6 +42,33 @@ mutation CREATE_PATTERN(
 mutation UPDATE_PATTERN_BEST_TEMPO($id: String!, $tempo: Int!) {
   updatePattern(id: $id, tempo: $tempo) {
     id
+  }
+}
+
+mutation UPDATE_PATTERN(
+  $id: String!
+  $name: String!
+  $score: String!
+  $description: String
+  $startTempo: Int
+  $goalTempo: Int
+) {
+  updatePattern(
+    id: $id
+    name: $name
+    score: $score
+    description: $description
+    startTempo: $startTempo
+    goalTempo: $goalTempo
+  ) {
+    id
+  }
+}
+
+mutation RENAME_PATTERN($id: String!, $name: String) {
+  updatePattern(id: $id, name: $name) {
+    id
+    name
   }
 }
 

@@ -1,23 +1,20 @@
 import { useMutation, useQuery } from '@apollo/client'
-import classNames from 'classnames'
 import { format } from 'date-fns'
 import { DELETE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
 import { reverse } from 'lodash'
-import { useRouter } from 'next/router'
 import { Star, X } from 'react-feather'
 import { toast } from 'react-toastify'
 import { isEmpty } from 'lodash'
 
-const index = () => {
-  const { query } = useRouter()
+const index = ({ patternId }) => {
   const { data } = useQuery(GET_PATTERN_RECORDS, {
-    variables: { patternId: query.pattern },
-    skip: !query.pattern
+    variables: { patternId },
+    skip: !patternId
   })
 
   const [deleteRecord] = useMutation(DELETE_RECORD, {
     refetchQueries: () => [
-      { query: GET_PATTERN_RECORDS, variables: { patternId: query.pattern } }
+      { query: GET_PATTERN_RECORDS, variables: { patternId } }
     ]
   })
 
@@ -30,8 +27,8 @@ const index = () => {
   if (!data || isEmpty(data.records)) return null
 
   return (
-    <div className="bg-white pt-10 bg-opacity-5 h-full">
-      <div className="overflow-y-scroll h-full w-full">
+    <div className="bg-white pt-5 bg-opacity-5 h-full">
+      <div className="overflow-y-scroll py-5 scrollbar-hide h-full w-full">
         <table className="border border-gray-700 rounded-lg table-layout mx-auto">
           <tr>
             <th className="text-left">Tempo</th>

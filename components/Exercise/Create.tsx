@@ -41,7 +41,7 @@ const PatternCreate = ({ refetchQueries, redirect }) => {
   }
 
   return (
-    <Card>
+    <div className="w-100" style={{ maxWidth: 800 }}>
       <Form
         initialValues={{
           score: '',
@@ -61,7 +61,7 @@ const PatternCreate = ({ refetchQueries, redirect }) => {
           </>
         )}
       </Form>
-    </Card>
+    </div>
   )
 }
 

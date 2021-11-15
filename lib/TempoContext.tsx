@@ -8,7 +8,7 @@ import { useSound } from 'use-sound'
 const TempoContext = createContext({})
 
 const TempoProvider = ({ children }) => {
-  const PRACTICE_DURATION = 4
+  const PRACTICE_DURATION = 60
   const [tempo, setTempo] = useState(120)
   const [isRunning, setIsRunning] = useState(false)
   const [isPracticing, setIsPracticing] = useState(false)

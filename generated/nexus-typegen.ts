@@ -90,8 +90,10 @@ export interface NexusGenFieldTypes {
     createExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
     createPattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     createRecord: NexusGenRootTypes['Record'] | null; // Record
+    deleteExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
     deletePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
     deleteRecord: NexusGenRootTypes['Record'] | null; // Record
+    updateExercise: NexusGenRootTypes['Exercise'] | null; // Exercise
     updatePattern: NexusGenRootTypes['Pattern'] | null; // Pattern
   }
   Pattern: { // field return type
@@ -133,8 +135,10 @@ export interface NexusGenFieldTypeNames {
     createExercise: 'Exercise'
     createPattern: 'Pattern'
     createRecord: 'Record'
+    deleteExercise: 'Exercise'
     deletePattern: 'Pattern'
     deleteRecord: 'Record'
+    updateExercise: 'Exercise'
     updatePattern: 'Pattern'
   }
   Pattern: { // field return type name
@@ -169,7 +173,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     createExercise: { // args
       description?: string | null; // String
-      name: string; // String!
+      name?: string | null; // String
     }
     createPattern: { // args
       description?: string | null; // String
@@ -184,15 +188,28 @@ export interface NexusGenArgTypes {
       rating: number; // Int!
       tempo: number; // Int!
     }
+    deleteExercise: { // args
+      exerciseId: number; // Int!
+    }
     deletePattern: { // args
       patternId: number; // Int!
     }
     deleteRecord: { // args
       recordId: number; // Int!
     }
-    updatePattern: { // args
+    updateExercise: { // args
+      description?: string | null; // String
       id: string; // String!
-      tempo: number; // Int!
+      name?: string | null; // String
+    }
+    updatePattern: { // args
+      description?: string | null; // String
+      goalTempo?: number | null; // Int
+      id: string; // String!
+      name?: string | null; // String
+      score?: string | null; // String
+      startTempo?: number | null; // Int
+      tempo?: number | null; // Int
     }
   }
   Query: {

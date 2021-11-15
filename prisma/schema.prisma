@@ -17,7 +17,7 @@ model Pattern {
   id                Int              @id @default(autoincrement())
   name              String
   description       String?
-  score             String           @unique
+  score             String
   patternCategoryId Int?
   goalTempo         Int?
   startTempo        Int?
@@ -33,7 +33,7 @@ model Pattern {
 
 model Exercise {
   id          Int       @id @default(autoincrement())
-  name        String    @unique
+  name        String
   description String?
   category    String?
   patterns    Pattern[]
