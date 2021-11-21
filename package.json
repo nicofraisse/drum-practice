@@ -18,6 +18,7 @@
     "@prisma/client": "^3.2.1",
     "apollo-server-micro": "^3.3.0",
     "classnames": "^2.2.6",
+    "color": "^4.0.1",
     "date-fns": "^2.24.0",
     "formik": "^2.2.9",
     "graphql": "^15.6.0",

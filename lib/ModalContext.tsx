@@ -21,10 +21,17 @@ const ModalProvider = ({ children }) => {
       }}
     >
       {modalOpen && (
-        <div className="bg-black bg-opacity-30 absolute w-screen h-screen flex items-center justify-center z-50">
-          <div className="bg-white p-8 text-xl relative">
+        <div
+          className="bg-black bg-opacity-60 absolute w-full h-full flex items-center justify-center z-50"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white p-10 text-xl relative rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
             <X
-              className="absolute top-0 right-0"
+              className="absolute"
+              style={{ top: 8, right: 8 }}
               onClick={() => setModalOpen(false)}
             />
             {modalContent}

@@ -11,7 +11,7 @@ const Button = ({ children, className, href, icon, ...props }) => {
     >
       <button
         className={classNames(
-          'flex items-center py-1 px-3 bg-gray-100 hover:bg-gray-200 border rounded text-gray-600 hover:text-gray-700',
+          'flex items-center px-6 py-2 text-lg bg-blue-200 hover:bg-gray-200 rounded-lg text-gray-600 hover:text-gray-700',
           className
         )}
         {...props}

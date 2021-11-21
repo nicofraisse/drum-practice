@@ -19,7 +19,10 @@ const Input: React.FC<InputProps> = ({
     return (
       <textarea
         value={value || ''}
-        className={classNames('w-full border rounded px-2 py-1', className)}
+        className={classNames(
+          'w-full rounded bg-black bg-opacity-60 p-2 rounded-sm mr-2',
+          className
+        )}
         placeholder={placeholder}
         {...props}
       />
@@ -29,10 +32,14 @@ const Input: React.FC<InputProps> = ({
     <input
       type={type}
       value={value || ''}
-      className={classNames('w-full rounded bg-black', className, {
-        'bg-black bg-opacity-60 px-3 py-1 rounded-sm mr-2 ': dark,
-        'px-2 py-1': !dark
-      })}
+      className={classNames(
+        'w-full rounded bg-black bg-opacity-60',
+        className,
+        {
+          'px-3 py-1 rounded-sm mr-2': dark,
+          'px-2 py-1': !dark
+        }
+      )}
       placeholder={placeholder}
       {...props}
     />

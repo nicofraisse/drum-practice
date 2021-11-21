@@ -31,7 +31,6 @@ const index = () => {
   const { tempo } = useTempo()
   const { query } = useRouter()
   const patternId = query?.pattern
-  console.log({ tempo })
   const { closeModal } = useModal()
 
   const [createRecord] = useMutation(CREATE_RECORD, {

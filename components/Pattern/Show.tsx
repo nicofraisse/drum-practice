@@ -16,7 +16,6 @@ const Show = ({ patternId }) => {
   })
 
   const handleSubmit = (values) => {
-    console.log({ values })
     updatePattern({
       variables: {
         id: patternId,

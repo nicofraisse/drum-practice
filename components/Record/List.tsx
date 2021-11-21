@@ -21,9 +21,15 @@ const RecordList = ({ patternId }) => {
   })
 
   const handleDelete = (recordId) => {
-    deleteRecord({ variables: { recordId } })
-      .then(() => toast.success('Deleted!'))
-      .catch((e) => toast.error(e.message))
+    if (
+      window.confirm(
+        'Are you sure you want to delete this record? This action is irreversable.'
+      )
+    ) {
+      deleteRecord({ variables: { recordId } })
+        .then(() => toast.success('Deleted!'))
+        .catch((e) => toast.error(e.message))
+    }
   }
 
   if (!data) return null

@@ -75,8 +75,6 @@ const TempoProvider = ({ children }) => {
     }
   }, [timer, isPracticing])
 
-  console.log('the tempo', tempo)
-
   return (
     <TempoContext.Provider
       value={{

@@ -4,15 +4,10 @@ import { useRouter } from 'next/router'
 const SidebarContext = createContext({})
 
 const SidebarProvider = ({ children }) => {
+  const [adminMode, setAdminMode] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState(null)
   const [selectedPattern, setSelectedPattern] = useState(null)
   const router = useRouter()
-
-  useEffect(() => {
-    if (selectedPattern) {
-      router.push(router.pathname + '?pattern=' + selectedPattern)
-    }
-  }, [selectedPattern])
 
   return (
     <SidebarContext.Provider
