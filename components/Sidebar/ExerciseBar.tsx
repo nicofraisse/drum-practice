@@ -35,7 +35,6 @@ const ExerciseBar = () => {
   }
 
   const handleRename = (values) => {
-    console.log({ values })
     renameExercise({
       variables: { id: values.id.toString(), name: values.name }
     }).catch((e) => {

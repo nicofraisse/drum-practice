@@ -3,46 +3,15 @@ import { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { Slash } from 'react-feather'
 import Color from 'color'
+import { INSTRUMENTS } from 'data/instruments'
 
-const ScoreBuilder = ({ onChange }) => {
+const ScoreBuilder = ({ onChange, initialValues }) => {
   const NB_NOTES = 8
   const ref = useRef()
   const width = ref?.current?.getBoundingClientRect().width
   const [output, setOutput] = useState({})
   const [instruments, setInstruments] = useState(['snare'])
   const [forceReset, setForceReset] = useState()
-  const INSTRUMENTS = [
-    {
-      id: 1,
-      name: 'Ride',
-      color: '#4b8f71',
-      icon: null
-    },
-    {
-      id: 2,
-      name: 'Hi Hat',
-      color: '#7d99d5',
-      icon: null
-    },
-    {
-      id: 3,
-      name: 'Snare',
-      color: '#a256bc',
-      icon: null
-    },
-    {
-      id: 4,
-      name: 'Kick',
-      color: '#b3567d',
-      icon: null
-    },
-    {
-      id: 5,
-      name: 'Hi Hat Pedal',
-      color: '#54a7a9',
-      icon: null
-    }
-  ]
 
   const [options, setOptions] = useState({
     velocity: 1,
@@ -67,7 +36,12 @@ const ScoreBuilder = ({ onChange }) => {
 
   useEffect(() => {
     onChange(output)
+    // console.log('the output', output)
   }, [output])
+
+  useEffect(() => {
+    setOutput(initialValues || {})
+  }, [])
 
   const clear = () => {
     if (window.confirm('Reset ?')) {
@@ -231,6 +205,16 @@ const ScoreBuilder = ({ onChange }) => {
                     updateScore={updateScore}
                     instrument={instrument}
                     forceReset={forceReset}
+                    initialState={
+                      output
+                        ? {
+                            buzz: output[instrument.name]?.[index]?.buzz,
+                            hand: output[instrument.name]?.[index]?.hand,
+                            flam: output[instrument.name]?.[index]?.flam,
+                            velocity: output[instrument.name]?.[index]?.velocity
+                          }
+                        : null
+                    }
                   />
                 ))}
               </div>
@@ -248,21 +232,44 @@ const Note = ({
   options,
   updateScore,
   instrument,
-  forceReset
+  forceReset,
+  initialState
 }) => {
-  const [color, setColor] = useState('bg-gray-800')
-  const [flam, setFlam] = useState(false)
-  const [hand, setHand] = useState(false)
-  const [buzz, setBuzz] = useState(false)
+  const getColor = (velocity) => {
+    if (velocity === 1) {
+      return Color(instrument.color).fade(0.9)
+    } else if (velocity === 2) {
+      return Color(instrument.color).fade(0.5)
+    } else if (velocity === 3) {
+      return Color(instrument.color)
+    }
+    return '#1b273b'
+  }
+
+  const [color, setColor] = useState(getColor(initialState.velocity))
+  const [flam, setFlam] = useState(initialState.flam)
+  const [hand, setHand] = useState(initialState.hand)
+  const [buzz, setBuzz] = useState(initialState.buzz)
+
+  useEffect(() => {
+    if (initialState) {
+      setBuzz(initialState.buzz)
+      setFlam(initialState.flam)
+      setHand(initialState.hand)
+      setColor(getColor(initialState.velocity))
+    }
+  }, [initialState])
 
   const resetNote = () => {
-    setColor('#212936')
+    setColor('#292d3e')
     setBuzz(false)
     setFlam(false)
     setHand('any')
   }
   useEffect(() => {
-    resetNote()
+    if (forceReset) {
+      resetNote()
+    }
   }, [forceReset])
 
   const handleClick = () => {
@@ -273,13 +280,7 @@ const Note = ({
       setHand(options.hand)
       setFlam(options.flam)
       setBuzz(options.buzz)
-      if (options.velocity === 1) {
-        setColor(Color(instrument.color).fade(0.9))
-      } else if (options.velocity === 2) {
-        setColor(Color(instrument.color).fade(0.5))
-      } else if (options.velocity === 3) {
-        setColor(Color(instrument.color))
-      }
+      setColor(getColor(options.velocity))
     }
   }
   return (

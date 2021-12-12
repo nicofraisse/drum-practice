@@ -20,3 +20,7 @@ input::placeholder,
 textarea::placeholder {
   font-size: 0.85em;
 }
+
+* {
+  box-sizing: border-box;
+}
