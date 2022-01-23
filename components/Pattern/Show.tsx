@@ -3,8 +3,11 @@ import { useQuery, useMutation } from '@apollo/client'
 import ScoreBoxes from 'components/Score/ScoreBoxes'
 import Form from 'components/Form'
 import Field from 'components/Field'
+import { useSidebar } from 'lib/SidebarContext'
+import classNames from 'classnames'
 
 const Show = ({ patternId }) => {
+  const { exerciseBarCollapsed } = useSidebar()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
@@ -65,7 +68,15 @@ const Show = ({ patternId }) => {
     <div className="h-full p-8">
       <div className="p-5 rounded-lg bg-gray-800 bg-opacity-100">
         <h2 className="text-3xl font-black mb-3">{data.pattern.name}</h2>
-        <div className="w-full bg-gray-500 h-[1px] mb-1"></div>
+        <div className="text-gray-500 text-sm text-left">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
+          veniam nihil repellat quae dolor maxime velit fugit, neque corporis
+          nostrum harum iste provident voluptatem, soluta maiores omnis non aut
+          facere! Quas pariatur magnam error mollitia officiis soluta provident
+          eos inventore? Fugiat eius non maxime laudantium dolore beatae ipsam
+          voluptas debitis!{' '}
+        </div>
+        <hr className="bg-opacity-0 border-gray-700 my-3" />
         <div className="flex justify-between">
           {data.pattern.bestTempo && (
             <div>🛳 Cruise tempo: {data.pattern.bestTempo} bpm</div>
@@ -78,16 +89,16 @@ const Show = ({ patternId }) => {
           )}
         </div>
       </div>
-      <div className="p-10 flex justify-center">
-        <ScoreBoxes score={data.pattern.score} />
+      <div className="flex">
+        <div className="my-10 mx-auto">
+          <ScoreBoxes score={data.pattern.score} />
+        </div>
       </div>
-      <div className="text-gray-500 text-sm text-center">
-        Instructions/description: {data?.pattern?.description}
-      </div>
-      <div className="text-gray-500 text-sm text-center">
+
+      {/* <div className="text-gray-500 text-sm text-center">
         Personal notes: //@todo: a box where you can just write some text
         whenever
-      </div>
+      </div> */}
     </div>
   )
 }

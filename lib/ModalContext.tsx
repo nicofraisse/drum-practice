@@ -22,7 +22,7 @@ const ModalProvider = ({ children }) => {
     >
       {modalOpen && (
         <div
-          className="bg-black bg-opacity-60 absolute w-full h-full flex items-center justify-center z-50"
+          className="bg-black bg-opacity-60 fixed w-full h-full flex items-center justify-center z-50"
           onClick={closeModal}
         >
           <div

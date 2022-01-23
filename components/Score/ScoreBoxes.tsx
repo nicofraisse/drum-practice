@@ -11,7 +11,10 @@ const ScoreBoxes = ({ score: scoreString }) => {
   console.log(INSTRUMENTS)
   const usedInstruments = INSTRUMENTS.filter((i) => score[i.name])
   return (
-    <div className="border border-gray-600">
+    <div
+      className="shadow shadow-white border-gray-600 rounded-lg"
+      style={{ boxShadow: '0px 0px 24px rgba(255, 255, 255, 0.1)' }}
+    >
       {usedInstruments.map((instrument, index) => {
         if (score[instrument.name]) {
           return (
@@ -32,9 +35,9 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
 
   return (
     <div
-      className={classNames('flex', { 'border-b border-gray-600': !isLast })}
+      className={classNames('flex', { 'border-jhghb border-gray-90': !isLast })}
     >
-      <div className="w-28 flex items-center justify-center text-right w-full justify-end border-r border-r-gray-800 bg-gray-800">
+      <div className="w-28 mr-2 flex items-center justify-center text-right w-full justify-end border-r-2 border-r-gray-500 bg-black bg-opacity-20">
         <Image
           src={`/icons/${instrument.icon}`}
           alt={instrument.name}
@@ -48,6 +51,7 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
             {...pattern[index]}
             instrument={instrument}
             presence={!!pattern[index]}
+            index={index}
           />
         ))}
       </div>
@@ -55,24 +59,32 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
   )
 }
 
-const Note = ({ velocity, buzz, flam, instrument, presence }) => {
+const Note = ({ velocity, buzz, flam, instrument, presence, index }) => {
   const velocityClass = (velocity) => {
     switch (velocity) {
       case 1:
         return 'opacity-60 w-1/2 h-1/2'
       case 2:
-        return 'opacity-90 w-3/4 h-3/4'
+        return 'opacity-90 w-2/3 h-2/3'
       case 3:
-        return 'opacity-100 border-yellow-400 border-4 w-5/6 h-5/6'
+        return 'opacity-100 border-yellow-400 border-4 w-3/4 h-3/4'
       default:
         return ''
     }
   }
+
   const buzzClass = (buzz) => {}
   const flamClass = (flam) => {}
 
   return (
-    <div className="w-20 h-20 flex items-center justify-center border-l border-l-gray-800">
+    <div
+      className={classNames(
+        'w-20 h-20 flex items-center justify-center border-l border-l-gray-800 bg-black bg-opacity-20',
+        {
+          'border-l-gray-500 border-l-2': index % 4 == 0
+        }
+      )}
+    >
       <div
         className={classNames(
           velocityClass(velocity),

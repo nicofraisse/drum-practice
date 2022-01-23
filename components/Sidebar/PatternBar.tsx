@@ -16,7 +16,8 @@ import Field from 'components/Field'
 import Link from 'next/link'
 
 const PatternBar = () => {
-  const { setSelectedPattern, selectedExercise, selectedPattern } = useSidebar()
+  const { setSelectedPattern, selectedExercise, selectedPattern, editMode } =
+    useSidebar()
   const { push, query } = useRouter()
   const { data, loading } = useQuery(GET_EXERCISE, {
     variables: { id: selectedExercise?.toString() },
@@ -100,10 +101,12 @@ const PatternBar = () => {
             {pattern.name ? (
               <>
                 <div className="truncate">{pattern.name}</div>
-                <Trash
-                  onClick={(e) => handleDelete(e, pattern)}
-                  className="text-red-300 hover:opacity-50 mr-1 w-16"
-                />
+                {editMode && (
+                  <Trash
+                    onClick={(e) => handleDelete(e, pattern)}
+                    className="text-red-300 hover:opacity-50 mr-1 w-16"
+                  />
+                )}
               </>
             ) : (
               <div className="flex items-center">
@@ -139,10 +142,12 @@ const PatternBar = () => {
           </div>
         </Link>
       ))}
-      <Plus
-        className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
-        onClick={handleCreatePattern}
-      />
+      {editMode && (
+        <Plus
+          className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
+          onClick={handleCreatePattern}
+        />
+      )}
     </div>
   )
 }

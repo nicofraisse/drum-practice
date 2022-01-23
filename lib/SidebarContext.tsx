@@ -7,6 +7,8 @@ const SidebarProvider = ({ children }) => {
   const [adminMode, setAdminMode] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState(null)
   const [selectedPattern, setSelectedPattern] = useState(null)
+  const [exerciseBarCollapsed, setExerciseBarCollapsed] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const router = useRouter()
 
   return (
@@ -15,7 +17,11 @@ const SidebarProvider = ({ children }) => {
         selectedExercise,
         selectedPattern,
         setSelectedExercise,
-        setSelectedPattern
+        setSelectedPattern,
+        editMode,
+        setEditMode,
+        exerciseBarCollapsed,
+        setExerciseBarCollapsed
       }}
     >
       {children}
