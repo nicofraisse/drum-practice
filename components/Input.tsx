@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
       <textarea
         value={value || ''}
         className={classNames(
-          'w-full rounded bg-black bg-opacity-60 p-2 rounded-sm mr-2',
+          'w-full rounded bg-black bg-opacity-60 p-2 rounded-sm mr-2 h-32',
           className
         )}
         placeholder={placeholder}

@@ -5,9 +5,12 @@ import Form from 'components/Form'
 import Field from 'components/Field'
 import { useSidebar } from 'lib/SidebarContext'
 import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import Edit from 'components/Pattern/Edit'
 
 const Show = ({ patternId }) => {
-  const { exerciseBarCollapsed } = useSidebar()
+  const { editMode } = useSidebar()
+  const { query, push } = useRouter()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
@@ -38,43 +41,18 @@ const Show = ({ patternId }) => {
   if (loading || !data) return <div className="h-full">Loading</div>
   if (!data.pattern) return <div className="h-full">Blank</div>
 
-  if (!data.pattern.score) {
-    return (
-      <div>
-        <Form
-          initialValues={{
-            score: '',
-            name: data.pattern.name || '',
-            description: data.pattern.description || ''
-          }}
-          onSubmit={handleSubmit}
-        >
-          {() => (
-            <>
-              <Field name="name" />
-              <Field name="description" />
-              <Field type="number" name="startTempo" />
-              <Field type="number" name="goalTempo" />
-              <Field name="score" />
-              <button>Submit</button>
-            </>
-          )}
-        </Form>
-      </div>
-    )
+  if (editMode || !data.pattern.score) {
+    push(`/patterns/${query.id}/edit`)
   }
 
   return (
     <div className="h-full p-8">
       <div className="p-5 rounded-lg bg-gray-800 bg-opacity-100">
-        <h2 className="text-3xl font-black mb-3">{data.pattern.name}</h2>
+        <h2 className="text-3xl font-black mb-3 break-all">
+          {data.pattern.name}
+        </h2>
         <div className="text-gray-500 text-sm text-left">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-          veniam nihil repellat quae dolor maxime velit fugit, neque corporis
-          nostrum harum iste provident voluptatem, soluta maiores omnis non aut
-          facere! Quas pariatur magnam error mollitia officiis soluta provident
-          eos inventore? Fugiat eius non maxime laudantium dolore beatae ipsam
-          voluptas debitis!{' '}
+          {data.pattern.description}
         </div>
         <hr className="bg-opacity-0 border-gray-700 my-3" />
         <div className="flex justify-between">

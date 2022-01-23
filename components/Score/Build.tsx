@@ -14,7 +14,7 @@ const ScoreBuilder = ({ onChange, initialValues }) => {
   const [forceReset, setForceReset] = useState()
 
   const [options, setOptions] = useState({
-    velocity: 1,
+    velocity: 2,
     flam: false,
     buzz: false,
     hand: undefined
@@ -79,7 +79,7 @@ const ScoreBuilder = ({ onChange, initialValues }) => {
             }
           )}
         >
-          Normal Stroke
+          Regular Stroke
         </div>
         <div
           onClick={() => setOptions({ ...options, velocity: 3 })}

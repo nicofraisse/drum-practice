@@ -14,15 +14,41 @@ import { useRouter } from 'next/router'
 import Form from 'components/Form'
 import Field from 'components/Field'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import ConditionalWrapper from 'components/ConditionalWrapper'
+import { ReactSortable } from 'react-sortablejs'
 
 const PatternBar = () => {
   const { setSelectedPattern, selectedExercise, selectedPattern, editMode } =
     useSidebar()
+  const [isCreating, setIsCreating] = useState(false)
   const { push, query } = useRouter()
   const { data, loading } = useQuery(GET_EXERCISE, {
     variables: { id: selectedExercise?.toString() },
     skip: !selectedExercise
   })
+
+  useEffect(() => {
+    setSelectedPattern(query.id)
+  }, [query])
+
+  const [state, setState] = useState([])
+  useEffect(() => {
+    console.log({ state })
+  }, [state])
+
+  useEffect(() => {
+    if (data?.exercise?.patterns) {
+      setState(
+        data.exercise.patterns.map((p, id) => {
+          return {
+            ...p
+          }
+        })
+      )
+    }
+    console.log('ok', state)
+  }, [data])
 
   const [createPattern] = useMutation(CREATE_PATTERN, {
     refetchQueries: () => [
@@ -42,6 +68,7 @@ const PatternBar = () => {
         exerciseId: selectedExercise
       }
     })
+    setIsCreating(true)
     setSelectedPattern(data.createPattern.id)
   }
 
@@ -62,7 +89,10 @@ const PatternBar = () => {
     renamePattern({
       variables: { id: values.id.toString(), name: values.name }
     })
-      .then(() => push(`/patterns/${values.id}/edit`))
+      .then(() => {
+        setIsCreating(false)
+        push(`/patterns/${values.id}/edit`)
+      })
       .catch((e) => {
         console.log(e.networkError?.result?.errors || e.message)
       })
@@ -87,61 +117,77 @@ const PatternBar = () => {
 
   return (
     <div className="bg-white bg-opacity-10 w-60 relative">
-      {data?.exercise?.patterns?.map((pattern) => (
-        <Link href={`/patterns/${pattern.id}`}>
-          <div
-            className={classNames(
-              'cursor-pointer py-5 px-3 select-none hover:bg-white truncate hover:bg-opacity-20 flex justify-between items-center',
-              {
-                'bg-white bg-opacity-20 text-white p-5': query.id == pattern.id,
-                'text-gray-400': query.id != pattern.id
-              }
+      <ReactSortable list={state} setList={setState}>
+        {state.map((pattern) => (
+          <ConditionalWrapper
+            condition={!isCreating}
+            wrapper={(children) => (
+              <Link href={`/patterns/${pattern.id}`}>{children}</Link>
             )}
+            key={pattern.id}
           >
-            {pattern.name ? (
-              <>
-                <div className="truncate">{pattern.name}</div>
-                {editMode && (
-                  <Trash
-                    onClick={(e) => handleDelete(e, pattern)}
-                    className="text-red-300 hover:opacity-50 mr-1 w-16"
-                  />
-                )}
-              </>
-            ) : (
-              <div className="flex items-center">
-                <Form
-                  className="flex items-center"
-                  id="ok"
-                  initialValues={{ name: '' }}
-                  onSubmit={(values) =>
-                    handleRename({ ...values, id: pattern.id })
-                  }
-                >
-                  {({ submitForm }) => (
-                    <>
-                      <Field
-                        name="name"
-                        hideLabel
-                        dark={true}
-                        className="flex items-center"
-                      />
-
-                      <button type="submit" onClick={submitForm}>
-                        <Check className="text-green-300" />
-                      </button>
-                      <X
-                        onClick={(e) => handleDelete(e, pattern)}
-                        className="text-red-300"
-                      />
-                    </>
+            <div
+              className={classNames(
+                'cursor-pointer py-5 px-3 select-none hover:bg-white truncate hover:bg-opacity-20 flex justify-between items-center',
+                {
+                  'bg-white bg-opacity-20 text-white':
+                    selectedPattern == pattern.id,
+                  'text-gray-400': selectedPattern != pattern.id
+                }
+              )}
+            >
+              {pattern.name ? (
+                <>
+                  <div
+                    className={classNames('truncate', {
+                      'w-5/6': editMode,
+                      'w-full': !editMode,
+                      'opacity-30': !pattern.score
+                    })}
+                  >
+                    {pattern.name} {!pattern.score && '(empty)'}
+                  </div>
+                  {editMode && (
+                    <Trash
+                      onClick={(e) => handleDelete(e, pattern)}
+                      className="text-red-300 hover:opacity-50 mr-1"
+                    />
                   )}
-                </Form>
-              </div>
-            )}
-          </div>
-        </Link>
-      ))}
+                </>
+              ) : (
+                <div className="flex items-center">
+                  <Form
+                    className="flex items-center"
+                    initialValues={{ name: '' }}
+                    onSubmit={(values) =>
+                      handleRename({ ...values, id: pattern.id })
+                    }
+                  >
+                    {({ submitForm }) => (
+                      <>
+                        <Field
+                          name="name"
+                          hideLabel
+                          dark={true}
+                          className="flex items-center"
+                        />
+
+                        <button type="submit" onClick={submitForm}>
+                          <Check className="text-green-300" />
+                        </button>
+                        <X
+                          onClick={(e) => handleDelete(e, pattern)}
+                          className="text-red-300"
+                        />
+                      </>
+                    )}
+                  </Form>
+                </div>
+              )}
+            </div>
+          </ConditionalWrapper>
+        ))}
+      </ReactSortable>
       {editMode && (
         <Plus
           className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"

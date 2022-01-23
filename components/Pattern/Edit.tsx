@@ -5,8 +5,10 @@ import Field from 'components/Field'
 import Button from 'components/Button'
 import ScoreBuilder from 'components/Score/Build'
 import { toast } from 'react-toastify'
+import { useSidebar } from 'lib/SidebarContext'
 
-const Show = ({ patternId }) => {
+const Edit = ({ patternId }) => {
+  const { setEditMode } = useSidebar()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
@@ -29,6 +31,7 @@ const Show = ({ patternId }) => {
       .then((data) => {
         toast.success('Success!')
         console.log({ data })
+        setEditMode(false)
       })
       .catch((e) => {
         toast.error(e.networkError?.result?.errors[0].message || e.message)
@@ -54,31 +57,29 @@ const Show = ({ patternId }) => {
       {({ values, setFieldValue }) => {
         return (
           <>
+            <Field name="name" />
             <Field name="score" hidden />
-
+            <div className="mb-1">Pattern</div>
             <ScoreBuilder
               initialValues={
                 data.pattern.score ? JSON.parse(data.pattern.score) : null
               }
               onChange={(value) => setFieldValue('score', value)}
             />
-            <div className="flex w-full mt-5">
-              <div className="mr-4 w-2/3">
-                <Field name="name" />
-                <Field name="description" type="textarea" />
-              </div>
-              <div className="w-1/3">
-                <Field type="number" name="startTempo" />
-                <Field type="number" name="goalTempo" />
-              </div>
+
+            <div className="flex w-full mt-4">
+              <Field type="number" name="startTempo" className="w-1/2" />
+              <Field type="number" name="goalTempo" className="w-1/2 ml-3" />
             </div>
 
+            <Field name="description" type="textarea" />
+
             <div className="flex">
-              <Button className="mt-4 mr-4" type="submit">
-                Save pattern
+              <Button className="mt-2" type="submit">
+                Save
               </Button>
             </div>
-            <div onClick={() => console.log(values)}>see</div>
+            <div onClick={() => console.log(values)}>Log values in console</div>
           </>
         )
       }}
@@ -86,4 +87,4 @@ const Show = ({ patternId }) => {
   )
 }
 
-export default Show
+export default Edit

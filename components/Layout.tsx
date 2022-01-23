@@ -9,7 +9,9 @@ const Layout = ({ children }) => {
       <Navbar />
       <main className="bg-gray-900 flex-1 flex text-gray-200 w-full h-screen-minus-navbar">
         <Sidebar />
-        <div className="w-full">{children}</div>
+        <div className="w-full overflow-y-scroll h-screen-minus-navbar">
+          {children}
+        </div>
         <Commands />
       </main>
       <div className="absolute bottom-10 right-10 bg-gray-800 p-8 rounded-xl">
