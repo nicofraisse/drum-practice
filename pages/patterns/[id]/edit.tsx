@@ -1,6 +1,6 @@
-import React from 'react'
 import PatternEdit from 'components/Pattern/Edit'
 import { useRouter } from 'next/router'
+import React from 'react'
 
 const edit = () => {
   const { query } = useRouter()

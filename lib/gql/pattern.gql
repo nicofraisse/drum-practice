@@ -16,12 +16,15 @@ query GET_PATTERN($id: String!) {
     bestTempo
     goalTempo
     fastestTempo
+    exercise {
+      id
+    }
   }
 }
 
 mutation CREATE_PATTERN(
   $name: String!
-  $score: String!
+  $score: String
   $description: String
   $startTempo: Int
   $goalTempo: Int

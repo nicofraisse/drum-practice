@@ -1,14 +1,16 @@
-import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
-import { useQuery, useMutation } from '@apollo/client'
-import Form from 'components/Form'
-import Field from 'components/Field'
+import { useMutation, useQuery } from '@apollo/client'
 import Button from 'components/Button'
+import Field from 'components/Field'
+import Form from 'components/Form'
 import ScoreBuilder from 'components/Score/Build'
-import { toast } from 'react-toastify'
+import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
 import { useSidebar } from 'lib/SidebarContext'
+import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const Edit = ({ patternId }) => {
   const { setEditMode } = useSidebar()
+  const { push } = useRouter()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
@@ -20,7 +22,6 @@ const Edit = ({ patternId }) => {
   })
 
   const handleSubmit = (values) => {
-    console.log(values.score)
     updatePattern({
       variables: {
         ...values,
@@ -30,7 +31,7 @@ const Edit = ({ patternId }) => {
     })
       .then((data) => {
         toast.success('Success!')
-        console.log({ data })
+        push(`/patterns/${patternId}`)
         setEditMode(false)
       })
       .catch((e) => {

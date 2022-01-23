@@ -1,7 +1,7 @@
-import Navbar from 'components/Navbar'
-import Metronome from 'components/Metronome'
-import Sidebar from 'components/Sidebar'
 import Commands from 'components/Commands'
+import Metronome from 'components/Metronome'
+import Navbar from 'components/Navbar'
+import Sidebar from 'components/Sidebar'
 
 const Layout = ({ children }) => {
   return (
@@ -14,9 +14,9 @@ const Layout = ({ children }) => {
         </div>
         <Commands />
       </main>
-      <div className="absolute bottom-10 right-10 bg-gray-800 p-8 rounded-xl">
+      {/* <div className="absolute bottom-10 right-10 bg-gray-800 p-8 rounded-xl">
         <Metronome />
-      </div>
+      </div> */}
     </div>
   )
 }

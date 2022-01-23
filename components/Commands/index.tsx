@@ -1,11 +1,10 @@
+import classNames from 'classnames'
 import Infotainment from 'components/Infotainment'
 import Metronome from 'components/Metronome'
-import { useTempo } from 'lib/TempoContext'
-import classNames from 'classnames'
-import { useEffect } from 'react'
 import PerformanceReview from 'components/PerformanceReview'
-
 import { useModal } from 'lib/ModalContext'
+import { useTempo } from 'lib/TempoContext'
+import { useEffect } from 'react'
 
 const index = () => {
   const { practiceMode, setPracticeMode, isRunning, done } = useTempo()

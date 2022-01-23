@@ -1,12 +1,12 @@
-import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
-import { useQuery, useMutation } from '@apollo/client'
-import ScoreBoxes from 'components/Score/ScoreBoxes'
-import Form from 'components/Form'
-import Field from 'components/Field'
-import { useSidebar } from 'lib/SidebarContext'
+import { useMutation, useQuery } from '@apollo/client'
 import classNames from 'classnames'
-import { useRouter } from 'next/router'
+import Field from 'components/Field'
+import Form from 'components/Form'
 import Edit from 'components/Pattern/Edit'
+import ScoreBoxes from 'components/Score/ScoreBoxes'
+import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
+import { useSidebar } from 'lib/SidebarContext'
+import { useRouter } from 'next/router'
 
 const Show = ({ patternId }) => {
   const { editMode } = useSidebar()
@@ -15,6 +15,7 @@ const Show = ({ patternId }) => {
     variables: { id: patternId },
     skip: !patternId
   })
+
   const [updatePattern] = useMutation(UPDATE_PATTERN, {
     refetchQueries: () => [
       { query: GET_PATTERN, variables: { id: patternId }, skip: !patternId }
@@ -41,7 +42,7 @@ const Show = ({ patternId }) => {
   if (loading || !data) return <div className="h-full">Loading</div>
   if (!data.pattern) return <div className="h-full">Blank</div>
 
-  if (editMode || !data.pattern.score) {
+  if (!data.pattern.score) {
     push(`/patterns/${query.id}/edit`)
   }
 

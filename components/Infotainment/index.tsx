@@ -1,6 +1,6 @@
-import React from 'react'
 import { useInfotainment } from 'lib/InfotainmentContext'
 import { useTempo } from 'lib/TempoContext'
+import React from 'react'
 
 const index = () => {
   const { infoText } = useInfotainment()

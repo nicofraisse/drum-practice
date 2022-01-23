@@ -1,7 +1,7 @@
-import ExerciseList from 'components/Exercise/List'
 import { useQuery } from '@apollo/client'
 import Button from 'components/Button'
 import Container from 'components/Container'
+import ExerciseList from 'components/Exercise/List'
 import { GET_EXERCISES } from 'lib/gql/exercise.gql'
 import React from 'react'
 

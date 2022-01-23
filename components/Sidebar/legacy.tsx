@@ -1,25 +1,25 @@
-import { useRef, useEffect } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
 import classNames from 'classnames'
-import { GET_EXERCISE, RENAME_EXERCISE } from 'lib/gql/exercise.gql'
+import ConditionalWrapper from 'components/ConditionalWrapper'
+import Field from 'components/Field'
+import Form from 'components/Form'
+import {
+  CREATE_EXERCISE,
+  DELETE_EXERCISE,
+  GET_EXERCISE,
+  GET_EXERCISES,
+  RENAME_EXERCISE
+} from 'lib/gql/exercise.gql'
 import {
   CREATE_PATTERN,
-  RENAME_PATTERN,
-  DELETE_PATTERN
+  DELETE_PATTERN,
+  RENAME_PATTERN
 } from 'lib/gql/pattern.gql'
-
-import { useQuery, useMutation } from '@apollo/client'
 import { useSidebar } from 'lib/SidebarContext'
-import { Play, ChevronRight, Plus, MinusCircle, Check, X } from 'react-feather'
-import {
-  GET_EXERCISES,
-  CREATE_EXERCISE,
-  DELETE_EXERCISE
-} from 'lib/gql/exercise.gql'
-import { useRouter } from 'next/router'
-import Form from 'components/Form'
-import Field from 'components/Field'
 import Link from 'next/link'
-import ConditionalWrapper from 'components/ConditionalWrapper'
+import { useRouter } from 'next/router'
+import { useEffect, useRef } from 'react'
+import { Check, ChevronRight, MinusCircle, Play, Plus, X } from 'react-feather'
 
 const Sidebar = () => {
   const { loading, error, data } = useQuery(GET_EXERCISES)

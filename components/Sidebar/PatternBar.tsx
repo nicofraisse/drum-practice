@@ -1,26 +1,30 @@
+import { useMutation, useQuery } from '@apollo/client'
 import classNames from 'classnames'
-import { GET_EXERCISE } from 'lib/gql/exercise.gql'
+import ConditionalWrapper from 'components/ConditionalWrapper'
+import Field from 'components/Field'
+import Form from 'components/Form'
+import { GET_EXERCISE, GET_EXERCISES } from 'lib/gql/exercise.gql'
 import {
   CREATE_PATTERN,
-  RENAME_PATTERN,
-  DELETE_PATTERN
+  DELETE_PATTERN,
+  RENAME_PATTERN
 } from 'lib/gql/pattern.gql'
-
-import { useQuery, useMutation } from '@apollo/client'
 import { useSidebar } from 'lib/SidebarContext'
-import { Plus, Check, Trash, X } from 'react-feather'
-import { GET_EXERCISES } from 'lib/gql/exercise.gql'
-import { useRouter } from 'next/router'
-import Form from 'components/Form'
-import Field from 'components/Field'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import ConditionalWrapper from 'components/ConditionalWrapper'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { Check, Plus, Trash, X } from 'react-feather'
 import { ReactSortable } from 'react-sortablejs'
+import { toast } from 'react-toastify'
 
 const PatternBar = () => {
-  const { setSelectedPattern, selectedExercise, selectedPattern, editMode } =
-    useSidebar()
+  const {
+    setSelectedPattern,
+    setSelectedExercise,
+    selectedExercise,
+    selectedPattern,
+    editMode
+  } = useSidebar()
   const [isCreating, setIsCreating] = useState(false)
   const { push, query } = useRouter()
   const { data, loading } = useQuery(GET_EXERCISE, {
@@ -29,13 +33,11 @@ const PatternBar = () => {
   })
 
   useEffect(() => {
-    setSelectedPattern(query.id)
-  }, [query])
+    console.log({ selectedExercise })
+  }, [selectedExercise])
 
   const [state, setState] = useState([])
-  useEffect(() => {
-    console.log({ state })
-  }, [state])
+  useEffect(() => {}, [state])
 
   useEffect(() => {
     if (data?.exercise?.patterns) {
@@ -47,7 +49,6 @@ const PatternBar = () => {
         })
       )
     }
-    console.log('ok', state)
   }, [data])
 
   const [createPattern] = useMutation(CREATE_PATTERN, {
@@ -60,16 +61,9 @@ const PatternBar = () => {
     ]
   })
 
-  const handleCreatePattern = async (values) => {
-    const { data } = await createPattern({
-      variables: {
-        name: '',
-        score: '',
-        exerciseId: selectedExercise
-      }
-    })
+  const handlePrepareCreate = async (values) => {
     setIsCreating(true)
-    setSelectedPattern(data.createPattern.id)
+    setSelectedPattern(null)
   }
 
   const [renamePattern] = useMutation(RENAME_PATTERN, {
@@ -79,39 +73,45 @@ const PatternBar = () => {
     refetchQueries: () => [
       {
         query: GET_EXERCISE,
-        variables: { id: selectedExercise.toString() },
-        skip: !selectedExercise
+        variables: { id: selectedExercise?.toString() }
       }
     ]
   })
 
-  const handleRename = (values) => {
-    renamePattern({
-      variables: { id: values.id.toString(), name: values.name }
+  const handleCreate = (values) => {
+    createPattern({
+      variables: {
+        name: values.name,
+        exerciseId: selectedExercise
+      }
     })
-      .then(() => {
+      .then(({ data }) => {
+        setSelectedPattern(data?.createPattern?.id)
         setIsCreating(false)
-        push(`/patterns/${values.id}/edit`)
+        push(`/patterns/${data?.createPattern?.id}/edit`)
       })
-      .catch((e) => {
-        console.log(e.networkError?.result?.errors || e.message)
-      })
+      .catch((e) => console.log(e.networkError?.result?.errors || e.message))
   }
 
   const handleDelete = (e, pattern) => {
     e.stopPropagation()
-    if (!pattern.name)
-      deletePattern({ variables: { patternId: pattern.id } }).then(() => {
-        push('/')
-      })
-    else if (
+
+    if (
       window.confirm(
         `Are you sure you want to delete this pattern? This action is irreversable.`
       )
     ) {
-      deletePattern({ variables: { patternId: pattern.id } }).then(() => {
-        push('/')
-      })
+      deletePattern({ variables: { patternId: pattern.id } })
+        .then(() => {
+          toast.success('deleted!')
+          console.log('exercise data', data)
+          const ps = data?.exercise?.patterns
+          if (ps.length >= 2) {
+            const lastPatternId = ps[ps.length - 2].id
+            setSelectedPattern(lastPatternId)
+          }
+        })
+        .catch((e) => console.log(e.networkError?.result?.errors || e.message))
     }
   }
 
@@ -136,62 +136,65 @@ const PatternBar = () => {
                 }
               )}
             >
-              {pattern.name ? (
-                <>
-                  <div
-                    className={classNames('truncate', {
-                      'w-5/6': editMode,
-                      'w-full': !editMode,
-                      'opacity-30': !pattern.score
-                    })}
-                  >
-                    {pattern.name} {!pattern.score && '(empty)'}
-                  </div>
-                  {editMode && (
-                    <Trash
-                      onClick={(e) => handleDelete(e, pattern)}
-                      className="text-red-300 hover:opacity-50 mr-1"
-                    />
-                  )}
-                </>
-              ) : (
-                <div className="flex items-center">
-                  <Form
-                    className="flex items-center"
-                    initialValues={{ name: '' }}
-                    onSubmit={(values) =>
-                      handleRename({ ...values, id: pattern.id })
-                    }
-                  >
-                    {({ submitForm }) => (
-                      <>
-                        <Field
-                          name="name"
-                          hideLabel
-                          dark={true}
-                          className="flex items-center"
-                        />
-
-                        <button type="submit" onClick={submitForm}>
-                          <Check className="text-green-300" />
-                        </button>
-                        <X
-                          onClick={(e) => handleDelete(e, pattern)}
-                          className="text-red-300"
-                        />
-                      </>
-                    )}
-                  </Form>
-                </div>
+              <div
+                className={classNames('truncate', {
+                  'w-5/6': editMode,
+                  'w-full': !editMode,
+                  'opacity-30': !pattern.score
+                })}
+              >
+                {pattern.name} {!pattern.score && '(pending)'}
+              </div>
+              {editMode && (
+                <Trash
+                  onClick={(e) => handleDelete(e, pattern)}
+                  className="text-red-300 hover:opacity-50 mr-1"
+                />
               )}
             </div>
           </ConditionalWrapper>
         ))}
       </ReactSortable>
+
+      {isCreating && (
+        <div
+          className={classNames(
+            'cursor-pointer py-5 px-3 select-none hover:bg-white truncate hover:bg-opacity-20 flex items-center',
+            'bg-white bg-opacity-20 text-white',
+            'text-gray-400'
+          )}
+        >
+          <Form
+            className="flex items-center"
+            initialValues={{ name: '' }}
+            onSubmit={handleCreate}
+          >
+            {() => (
+              <>
+                <Field
+                  name="name"
+                  hideLabel
+                  dark={true}
+                  className="flex items-center mb-0"
+                />
+
+                <button type="submit">
+                  <Check className="text-green-300 hover:shadow-lg" />
+                </button>
+                <X
+                  onClick={() => setIsCreating(false)}
+                  className="text-red-300 hover:shadow-lg"
+                />
+              </>
+            )}
+          </Form>
+        </div>
+      )}
+
       {editMode && (
         <Plus
           className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
-          onClick={handleCreatePattern}
+          onClick={handlePrepareCreate}
         />
       )}
     </div>

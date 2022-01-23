@@ -1,9 +1,9 @@
 import Commands from 'components/Commands'
-import History from 'components/History'
-import { useState, useEffect } from 'react'
-import PatternShow from 'components/Pattern/Show'
 import ExerciseCreate from 'components/Exercise/Create'
+import History from 'components/History'
+import PatternShow from 'components/Pattern/Show'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 const PatternPractice = ({ id }) => (
   <>

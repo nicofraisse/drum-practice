@@ -1,14 +1,13 @@
-import React from 'react'
-import { INSTRUMENTS } from 'data/instruments'
 import classNames from 'classnames'
+import { INSTRUMENTS } from 'data/instruments'
 import Image from 'next/image'
+import React from 'react'
 
 const ScoreBoxes = ({ score: scoreString }) => {
   if (!scoreString) return null
 
   const score = JSON.parse(scoreString)
-  console.log(score)
-  console.log(INSTRUMENTS)
+
   const usedInstruments = INSTRUMENTS.filter((i) => score[i.name])
   return (
     <div

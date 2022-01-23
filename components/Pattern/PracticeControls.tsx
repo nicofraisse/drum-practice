@@ -1,7 +1,6 @@
-import React from 'react'
-import { useTempo } from 'lib/TempoContext'
 import Button from 'components/Button'
-import { useState, useEffect } from 'react'
+import { useTempo } from 'lib/TempoContext'
+import React, { useEffect, useState } from 'react'
 
 const PracticeControls = ({ time, preparing }) => {
   return (

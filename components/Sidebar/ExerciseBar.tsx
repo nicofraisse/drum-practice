@@ -1,31 +1,31 @@
-import { useState } from 'react'
-import { useQuery, useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import classNames from 'classnames'
-import { useSidebar } from 'lib/SidebarContext'
-import {
-  ChevronRight,
-  Plus,
-  Check,
-  Trash,
-  X,
-  ChevronsLeft
-} from 'react-feather'
-import { RENAME_EXERCISE } from 'lib/gql/exercise.gql'
-import {
-  GET_EXERCISES,
-  CREATE_EXERCISE,
-  DELETE_EXERCISE
-} from 'lib/gql/exercise.gql'
-import Form from 'components/Form'
 import Field from 'components/Field'
+import Form from 'components/Form'
+import {
+  CREATE_EXERCISE,
+  DELETE_EXERCISE,
+  GET_EXERCISES,
+  RENAME_EXERCISE
+} from 'lib/gql/exercise.gql'
+import { useSidebar } from 'lib/SidebarContext'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import {
+  Check,
+  ChevronRight,
+  ChevronsLeft,
+  Plus,
+  Trash,
+  X
+} from 'react-feather'
 
 const ExerciseBar = () => {
-  const [collapsed, setCollapsed] = useState(false)
   const { data } = useQuery(GET_EXERCISES)
   const {
     selectedExercise,
     setSelectedExercise,
+    setSelectedPattern,
     editMode,
     exerciseBarCollapsed,
     setExerciseBarCollapsed
@@ -70,6 +70,13 @@ const ExerciseBar = () => {
     }
   }
 
+  const handleClick = (e) => {
+    if (exerciseBarCollapsed) {
+      e.stopPropagation()
+      setExerciseBarCollapsed(false)
+    }
+  }
+
   return (
     <div
       className={classNames(
@@ -79,12 +86,7 @@ const ExerciseBar = () => {
           'w-0 cursor-pointer': exerciseBarCollapsed
         }
       )}
-      onClick={(e) => {
-        if (exerciseBarCollapsed) {
-          e.stopPropagation()
-          setExerciseBarCollapsed(false)
-        }
-      }}
+      onClick={handleClick}
     >
       {data?.exercises.map((exercise) => (
         <div
@@ -97,7 +99,13 @@ const ExerciseBar = () => {
               'opacity-0': exerciseBarCollapsed
             }
           )}
-          onClick={() => setSelectedExercise(exercise.id)}
+          onClick={() => {
+            if (selectedExercise !== exercise.id) {
+              console.log(exercise)
+              setSelectedExercise(exercise.id)
+              setSelectedPattern(exercise.patterns?.[0]?.id)
+            }
+          }}
         >
           {exercise.name ? (
             <>
@@ -114,30 +122,30 @@ const ExerciseBar = () => {
               </div>
             </>
           ) : (
-            <div className="flex items-center">
-              <Form
-                className="flex items-center"
-                initialValues={{ name: '' }}
-                onSubmit={(values) =>
-                  handleRename({ ...values, id: exercise.id })
-                }
-              >
-                {() => (
-                  <>
-                    <Field
-                      name="name"
-                      hideLabel
-                      dark={true}
-                      className="flex items-center"
-                    />
+            <Form
+              className="flex items-center"
+              initialValues={{ name: '' }}
+              onSubmit={(values) =>
+                handleRename({ ...values, id: exercise.id })
+              }
+            >
+              {() => (
+                <>
+                  <Field
+                    name="name"
+                    hideLabel
+                    dark={true}
+                    className="flex items-center mb-0"
+                  />
+                  <div className="flex">
                     <button type="submit">
                       <Check />
                     </button>
                     <X onClick={(e) => handleDelete(e, exercise.id)} />
-                  </>
-                )}
-              </Form>
-            </div>
+                  </div>
+                </>
+              )}
+            </Form>
           )}
         </div>
       ))}

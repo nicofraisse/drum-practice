@@ -1,9 +1,8 @@
-import React from 'react'
-import { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import { Slash } from 'react-feather'
 import Color from 'color'
 import { INSTRUMENTS } from 'data/instruments'
+import React, { useEffect, useRef, useState } from 'react'
+import { Slash } from 'react-feather'
 
 const ScoreBuilder = ({ onChange, initialValues }) => {
   const NB_NOTES = 8

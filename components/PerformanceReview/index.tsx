@@ -2,11 +2,11 @@ import { useMutation } from '@apollo/client'
 import { ratings } from 'data/ratings'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { CREATE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
+import { useModal } from 'lib/ModalContext'
 import { useTempo } from 'lib/TempoContext'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
-import { useModal } from 'lib/ModalContext'
 
 const Rating = ({ data, handleRate }) => {
   return (

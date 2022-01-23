@@ -17,7 +17,7 @@ model Pattern {
   id                Int              @id @default(autoincrement())
   name              String
   description       String?
-  score             String
+  score             String?
   patternCategoryId Int?
   goalTempo         Int?
   startTempo        Int?

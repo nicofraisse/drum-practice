@@ -1,10 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { format } from 'date-fns'
 import { DELETE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
-import { reverse } from 'lodash'
+import { isEmpty, reverse } from 'lodash'
 import { Star, X } from 'react-feather'
 import { toast } from 'react-toastify'
-import { isEmpty } from 'lodash'
 
 const index = ({ patternId }) => {
   const { data } = useQuery(GET_PATTERN_RECORDS, {

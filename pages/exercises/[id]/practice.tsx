@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
 import Container from 'components/Container'
+import PracticeCard from 'components/Pattern/Card'
 import { GET_EXERCISE } from 'lib/gql/exercise.gql'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import PracticeCard from 'components/Pattern/Card'
+import { useEffect, useState } from 'react'
 
 const Practice = () => {
   const id = useRouter().query.id

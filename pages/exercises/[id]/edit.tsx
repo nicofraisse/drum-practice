@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import Button from 'components/Button'
-import { Form } from 'components/Form'
 import Field from 'components/Field'
+import { Form } from 'components/Form'
 import PatternFields from 'components/Pattern/Fields'
 import ScoreBoxes from 'components/Score/ScoreBoxes'
 import { GET_EXERCISE } from 'lib/gql/exercise.gql'
@@ -12,8 +12,7 @@ import { Edit as EditIcon, PlusCircle, Trash } from 'react-feather'
 import { toast } from 'react-toastify'
 
 const Edit = () => {
-  const { query } = useRouter()
-  const [showVariationForm, setShowVariationForm] = useState(false)
+  const { query, push } = useRouter()
   const id = query.id
   const { data, loading } = useQuery(GET_EXERCISE, {
     variables: { id },
@@ -39,7 +38,7 @@ const Edit = () => {
     createPattern({ variables })
       .then(() => {
         toast.success('Created!')
-        setShowVariationForm(false)
+        push(`/patterns/${id}`)
       })
       .catch((e) => toast.error(e.networkError?.result.errors || e.message))
   }

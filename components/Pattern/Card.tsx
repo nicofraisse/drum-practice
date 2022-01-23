@@ -1,10 +1,9 @@
-import React from 'react'
-import ScoreBoxes from 'components/Score/ScoreBoxes'
 import classNames from 'classnames'
-import TempoAcheivement from 'components/Pattern/TempoAcheivement'
-import { useState, useEffect } from 'react'
 import PracticeControls from 'components/Pattern/PracticeControls'
+import TempoAcheivement from 'components/Pattern/TempoAcheivement'
+import ScoreBoxes from 'components/Score/ScoreBoxes'
 import { useTempo } from 'lib/TempoContext'
+import React, { useEffect, useState } from 'react'
 import { MinusCircle, Pause, Play, PlusCircle } from 'react-feather'
 
 const Card = ({ pattern, isSelected, setSelected }) => {

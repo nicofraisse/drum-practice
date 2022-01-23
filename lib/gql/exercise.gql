@@ -2,6 +2,9 @@ query GET_EXERCISES {
   exercises {
     id
     name
+    patterns {
+      id
+    }
   }
 }
 query GET_EXERCISE($id: String!) {
