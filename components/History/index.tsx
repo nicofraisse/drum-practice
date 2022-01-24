@@ -7,13 +7,16 @@ import { toast } from 'react-toastify'
 
 const index = ({ patternId }) => {
   const { data } = useQuery(GET_PATTERN_RECORDS, {
-    variables: { patternId },
+    variables: { patternId: patternId.toString() },
     skip: !patternId
   })
 
   const [deleteRecord] = useMutation(DELETE_RECORD, {
     refetchQueries: () => [
-      { query: GET_PATTERN_RECORDS, variables: { patternId } }
+      {
+        query: GET_PATTERN_RECORDS,
+        variables: { patternId: patternId.toString() }
+      }
     ]
   })
 
@@ -29,7 +32,12 @@ const index = ({ patternId }) => {
     }
   }
 
-  if (!data || isEmpty(data.records)) return null
+  if (!data || isEmpty(data.records))
+    return (
+      <div className="bg-white pt-5 bg-opacity-5 h-full text-center text-gray-300">
+        No records yet!
+      </div>
+    )
 
   return (
     <div className="bg-white pt-5 bg-opacity-5 h-full">

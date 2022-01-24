@@ -32,7 +32,7 @@ const RecordList = ({ patternId }) => {
     }
   }
 
-  if (!data) return null
+  if (!data) return 'haha'
 
   return (
     <div>

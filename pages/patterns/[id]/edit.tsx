@@ -4,6 +4,7 @@ import React from 'react'
 
 const edit = () => {
   const { query } = useRouter()
+  console.log('hi')
   return (
     <div className="p-10 mx-auto max-w-[680px] bg-blue-400 bg-opacity-10 rounded-lg m-10 shadow-xl">
       <PatternEdit patternId={query.id} />

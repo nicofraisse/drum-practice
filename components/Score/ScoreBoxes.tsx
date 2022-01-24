@@ -31,6 +31,7 @@ const ScoreBoxes = ({ score: scoreString }) => {
 
 const InstrumentRow = ({ pattern, instrument, isLast }) => {
   const NB_NOTES = 8
+  console.log(pattern)
 
   return (
     <div
@@ -58,7 +59,7 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
   )
 }
 
-const Note = ({ velocity, buzz, flam, instrument, presence, index }) => {
+const Note = ({ velocity, buzz, flam, instrument, presence, index, hand }) => {
   const velocityClass = (velocity) => {
     switch (velocity) {
       case 1:
@@ -74,6 +75,25 @@ const Note = ({ velocity, buzz, flam, instrument, presence, index }) => {
 
   const buzzClass = (buzz) => {}
   const flamClass = (flam) => {}
+
+  const Hand = ({ hand }) => {
+    const l = hand === 'left'
+    const r = hand === 'right'
+    const handLetter = r ? 'R' : l ? 'L' : null
+    return (
+      <div
+        className={classNames(
+          'h-6 w-6 rounded-full flex items-center justify-center',
+          {
+            'bg-black bg-opacity-50': r,
+            'bg-white bg-opacity-50 text-gray-800': l
+          }
+        )}
+      >
+        {handLetter}
+      </div>
+    )
+  }
 
   return (
     <div
@@ -97,6 +117,7 @@ const Note = ({ velocity, buzz, flam, instrument, presence, index }) => {
           <>
             {flam && <div>F</div>}
             {buzz && <div>B</div>}
+            <Hand hand={hand} />
           </>
         )}
       </div>

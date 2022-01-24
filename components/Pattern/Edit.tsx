@@ -9,17 +9,20 @@ import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
 const Edit = ({ patternId }) => {
+  console.log({ patternId })
   const { setEditMode } = useSidebar()
   const { push } = useRouter()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
+    // fetchPolicy: 'cache-and-'
   })
   const [updatePattern] = useMutation(UPDATE_PATTERN, {
     refetchQueries: () => [
       { query: GET_PATTERN, variables: { id: patternId }, skip: !patternId }
     ]
   })
+  console.log({ data })
 
   const handleSubmit = (values) => {
     updatePattern({
@@ -54,6 +57,7 @@ const Edit = ({ patternId }) => {
         description: data.pattern.description || ''
       }}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {({ values, setFieldValue }) => {
         return (

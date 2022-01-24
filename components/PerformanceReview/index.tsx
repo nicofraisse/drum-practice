@@ -30,7 +30,7 @@ const Rating = ({ data, handleRate }) => {
 const index = () => {
   const { tempo } = useTempo()
   const { query } = useRouter()
-  const patternId = query?.pattern
+  const patternId = query?.id
   const { closeModal } = useModal()
 
   const [createRecord] = useMutation(CREATE_RECORD, {

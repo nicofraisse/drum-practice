@@ -15,12 +15,19 @@ const SidebarProvider = ({ children }) => {
   useEffect(() => {
     if (query.id) {
       if (editMode) {
+        console.log('pushing')
         push(`/patterns/${query.id}/edit`)
       } else {
         push(`/patterns/${query.id}`)
       }
+    } else if (selectedPattern) {
+      if (editMode) {
+        push(`/patterns/${selectedPattern}/edit`)
+      } else {
+        push(`/patterns/${selectedPattern}`)
+      }
     }
-  }, [editMode])
+  }, [editMode, selectedPattern])
 
   const { data: patternData } = useQuery(GET_PATTERN, {
     variables: { id: query.id },
@@ -35,12 +42,6 @@ const SidebarProvider = ({ children }) => {
       setSelectedPattern(query.id)
     }
   }, [query, patternData])
-
-  useEffect(() => {
-    if (selectedPattern) {
-      push(`/patterns/${selectedPattern}`)
-    }
-  }, [selectedPattern])
 
   useEffect(() => {
     if (!query.id) {

@@ -32,10 +32,6 @@ const PatternBar = () => {
     skip: !selectedExercise
   })
 
-  useEffect(() => {
-    console.log({ selectedExercise })
-  }, [selectedExercise])
-
   const [state, setState] = useState([])
   useEffect(() => {}, [state])
 
@@ -104,7 +100,6 @@ const PatternBar = () => {
       deletePattern({ variables: { patternId: pattern.id } })
         .then(() => {
           toast.success('deleted!')
-          console.log('exercise data', data)
           const ps = data?.exercise?.patterns
           if (ps.length >= 2) {
             const lastPatternId = ps[ps.length - 2].id
@@ -122,7 +117,15 @@ const PatternBar = () => {
           <ConditionalWrapper
             condition={!isCreating}
             wrapper={(children) => (
-              <Link href={`/patterns/${pattern.id}`}>{children}</Link>
+              <Link
+                href={
+                  editMode
+                    ? `/patterns/${pattern.id}/edit`
+                    : `/patterns/${pattern.id}`
+                }
+              >
+                {children}
+              </Link>
             )}
             key={pattern.id}
           >
