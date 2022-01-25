@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
 
-import ScoreBoxes from 'components/Score/ScoreBoxes'
+import ScoreShow from 'components/Score/Show'
 import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 import RecordList from 'components/Record/List'
-import History from 'components/History'
+import TempoAcheivement from 'components/Pattern/TempoAcheivement'
 
 const Show = ({ patternId }) => {
   const { query, push } = useRouter()
@@ -52,15 +52,16 @@ const Show = ({ patternId }) => {
               <div>🥵 Maxium succeded: {data.pattern.fastestTempo} bpm</div>
             )}
           </div>
+          <TempoAcheivement min={60} max={130} current={110} />
         </div>
         <div className="flex">
           <div className="my-10 mx-auto">
-            <ScoreBoxes score={data.pattern.score} />
+            <ScoreShow score={data.pattern.score} />
           </div>
         </div>
       </div>
       <div className="h-1/4">
-        <History patternId={data.pattern.id} />
+        <RecordList patternId={data.pattern.id} />
       </div>
     </>
   )

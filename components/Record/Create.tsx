@@ -2,7 +2,9 @@ import { useMutation } from '@apollo/client'
 import { ratings } from 'data/ratings'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { CREATE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
+import { useModal } from 'lib/ModalContext'
 import { useTempo } from 'lib/TempoContext'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
 
@@ -25,8 +27,11 @@ const Rating = ({ data, handleRate }) => {
   )
 }
 
-const Create = ({ patternId }) => {
+const index = () => {
   const { tempo } = useTempo()
+  const { query } = useRouter()
+  const patternId = query?.id
+  const { closeModal } = useModal()
 
   const [createRecord] = useMutation(CREATE_RECORD, {
     refetchQueries: () => [
@@ -44,14 +49,16 @@ const Create = ({ patternId }) => {
     })
       .then(() => {
         toast.success('Saved!')
+        closeModal()
       })
-      .catch(() => {
+      .catch((e) => {
         toast.error('Error saving record')
+        console.error(e.networkError?.result?.errors || e.message)
       })
   }
   return (
     <div>
-      <h2>How would you rate your performance?</h2>
+      <h2>How would you rate your performancbbbbbbbbe?</h2>
       {ratings.map((r) => (
         <Rating data={r} key={r.mark} handleRate={handleCreate} />
       ))}
@@ -59,4 +66,4 @@ const Create = ({ patternId }) => {
   )
 }
 
-export default Create
+export default index

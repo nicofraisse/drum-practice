@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import Infotainment from 'components/Infotainment'
 import Metronome from 'components/Metronome'
-import PerformanceReview from 'components/PerformanceReview'
+import RecordCreate from 'components/Record/Create'
 import { useModal } from 'lib/ModalContext'
 import { useTempo } from 'lib/TempoContext'
 import { useEffect } from 'react'
@@ -13,7 +13,7 @@ const index = () => {
   useEffect(() => {
     if (done) {
       setModalOpen(true)
-      setModalContent(<PerformanceReview />)
+      setModalContent(<RecordCreate />)
     }
   }, [done])
 

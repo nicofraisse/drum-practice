@@ -194,12 +194,12 @@ const PatternBar = () => {
         </div>
       )}
 
-      {editMode && (
-        <Plus
-          className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
-          onClick={handlePrepareCreate}
-        />
-      )}
+      {/* {editMode && ( */}
+      <Plus
+        className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
+        onClick={handlePrepareCreate}
+      />
+      {/* )} */}
     </div>
   )
 }

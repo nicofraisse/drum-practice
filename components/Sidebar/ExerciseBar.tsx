@@ -150,12 +150,12 @@ const ExerciseBar = () => {
         </div>
       ))}
 
-      {editMode && (
-        <Plus
-          className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
-          onClick={handleCreateExercise}
-        />
-      )}
+      {/* {editMode && ( */}
+      <Plus
+        className="absolute bottom-3 right-3 opacity-40 hover:opacity-80 transition duration-150 cursor-pointer"
+        onClick={handleCreateExercise}
+      />
+      {/* )} */}
 
       <ChevronsLeft
         className={classNames(

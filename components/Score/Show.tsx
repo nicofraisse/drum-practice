@@ -3,7 +3,7 @@ import { INSTRUMENTS } from 'data/instruments'
 import Image from 'next/image'
 import React from 'react'
 
-const ScoreBoxes = ({ score: scoreString }) => {
+const Show = ({ score: scoreString }) => {
   if (!scoreString) return null
 
   const score = JSON.parse(scoreString)
@@ -125,4 +125,4 @@ const Note = ({ velocity, buzz, flam, instrument, presence, index, hand }) => {
   )
 }
 
-export default ScoreBoxes
+export default Show
