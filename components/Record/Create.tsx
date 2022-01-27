@@ -27,7 +27,7 @@ const Rating = ({ data, handleRate }) => {
   )
 }
 
-const index = () => {
+const Index = () => {
   const { tempo } = useTempo()
   const { query } = useRouter()
   const patternId = query?.id
@@ -66,4 +66,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

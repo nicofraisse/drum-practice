@@ -7,9 +7,7 @@ import { Slash } from 'react-feather'
 const ScoreBuilder = ({ onChange, initialValues }) => {
   const NB_NOTES = 8
   const ref = useRef()
-  const width = ref?.current?.getBoundingClientRect().width
   const [output, setOutput] = useState({})
-  const [instruments, setInstruments] = useState(['snare'])
   const [forceReset, setForceReset] = useState()
 
   const [options, setOptions] = useState({
@@ -190,7 +188,7 @@ const ScoreBuilder = ({ onChange, initialValues }) => {
       <div className="mt-3">
         {INSTRUMENTS.map((instrument) => {
           return (
-            <div className="flex ">
+            <div className="flex" key={instrument.name}>
               <div className="w-[100px] flex items-center">
                 {instrument.name}
               </div>

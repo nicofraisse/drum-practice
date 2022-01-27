@@ -31,7 +31,6 @@ const Show = ({ score: scoreString }) => {
 
 const InstrumentRow = ({ pattern, instrument, isLast }) => {
   const NB_NOTES = 8
-  console.log(pattern)
 
   return (
     <div
@@ -52,6 +51,7 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
             instrument={instrument}
             presence={!!pattern[index]}
             index={index}
+            key={index}
           />
         ))}
       </div>
@@ -72,9 +72,6 @@ const Note = ({ velocity, buzz, flam, instrument, presence, index, hand }) => {
         return ''
     }
   }
-
-  const buzzClass = (buzz) => {}
-  const flamClass = (flam) => {}
 
   const Hand = ({ hand }) => {
     const l = hand === 'left'

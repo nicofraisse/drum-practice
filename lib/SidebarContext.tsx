@@ -1,7 +1,7 @@
+import { useQuery } from '@apollo/client'
+import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { GET_PATTERN } from 'lib/gql/pattern.gql'
-import { useQuery } from '@apollo/client'
 
 const SidebarContext = createContext({})
 
@@ -15,7 +15,6 @@ const SidebarProvider = ({ children }) => {
   useEffect(() => {
     if (query.id) {
       if (editMode) {
-        console.log('pushing')
         push(`/patterns/${query.id}/edit`)
       } else {
         push(`/patterns/${query.id}`)

@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client'
-
 import PatternShow from 'components/Pattern/Show'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
-
 import { useRouter } from 'next/router'
 
 const Pattern = () => {

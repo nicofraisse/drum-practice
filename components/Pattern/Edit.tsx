@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
 const Edit = ({ patternId }) => {
-  console.log({ patternId })
   const { setEditMode } = useSidebar()
   const { push } = useRouter()
   const { data, loading } = useQuery(GET_PATTERN, {
@@ -22,7 +21,6 @@ const Edit = ({ patternId }) => {
       { query: GET_PATTERN, variables: { id: patternId }, skip: !patternId }
     ]
   })
-  console.log({ data })
 
   const handleSubmit = (values) => {
     updatePattern({
@@ -32,8 +30,8 @@ const Edit = ({ patternId }) => {
         score: JSON.stringify(values.score)
       }
     })
-      .then((data) => {
-        toast.success('Success!')
+      .then(() => {
+        toast.success('Saved!')
         push(`/patterns/${patternId}`)
         setEditMode(false)
       })

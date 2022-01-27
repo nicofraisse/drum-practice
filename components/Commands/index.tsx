@@ -6,7 +6,7 @@ import { useModal } from 'lib/ModalContext'
 import { useTempo } from 'lib/TempoContext'
 import { useEffect } from 'react'
 
-const index = () => {
+const Index = () => {
   const { practiceMode, setPracticeMode, isRunning, done } = useTempo()
   const { setModalOpen, setModalContent } = useModal()
 
@@ -62,4 +62,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

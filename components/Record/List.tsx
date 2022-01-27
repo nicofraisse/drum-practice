@@ -5,7 +5,7 @@ import { isEmpty, reverse } from 'lodash'
 import { Star, X } from 'react-feather'
 import { toast } from 'react-toastify'
 
-const index = ({ patternId }) => {
+const Index = ({ patternId }) => {
   const { data } = useQuery(GET_PATTERN_RECORDS, {
     variables: { patternId: patternId.toString() },
     skip: !patternId
@@ -80,4 +80,4 @@ const index = ({ patternId }) => {
   )
 }
 
-export default index
+export default Index

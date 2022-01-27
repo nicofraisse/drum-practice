@@ -1,22 +1,15 @@
-import { useMutation, useQuery } from '@apollo/client'
-
-import ScoreShow from 'components/Score/Show'
-import { GET_PATTERN, UPDATE_PATTERN } from 'lib/gql/pattern.gql'
-import { useRouter } from 'next/router'
-import RecordList from 'components/Record/List'
+import { useQuery } from '@apollo/client'
 import TempoAcheivement from 'components/Pattern/TempoAcheivement'
+import RecordList from 'components/Record/List'
+import ScoreShow from 'components/Score/Show'
+import { GET_PATTERN } from 'lib/gql/pattern.gql'
+import { useRouter } from 'next/router'
 
 const Show = ({ patternId }) => {
   const { query, push } = useRouter()
   const { data, loading } = useQuery(GET_PATTERN, {
     variables: { id: patternId },
     skip: !patternId
-  })
-
-  const [updatePattern] = useMutation(UPDATE_PATTERN, {
-    refetchQueries: () => [
-      { query: GET_PATTERN, variables: { id: patternId }, skip: !patternId }
-    ]
   })
 
   if (!patternId) {
@@ -43,13 +36,28 @@ const Show = ({ patternId }) => {
           <hr className="bg-opacity-0 border-gray-700 my-3" />
           <div className="flex justify-between">
             {data.pattern.bestTempo && (
-              <div>🛳 Cruise tempo: {data.pattern.bestTempo} bpm</div>
+              <div>
+                <span role="img" aria-label="boat">
+                  🛳
+                </span>{' '}
+                Cruise tempo: {data.pattern.bestTempo} bpm
+              </div>
             )}
             {data.pattern.goalTempo && (
-              <div>✨ Goal cruise tempo: {data.pattern.goalTempo} bpm</div>
+              <div>
+                <span role="img" aria-label="stars">
+                  ✨
+                </span>{' '}
+                Goal cruise tempo: {data.pattern.goalTempo} bpm
+              </div>
             )}
             {data.pattern.fastestTempo && (
-              <div>🥵 Maxium succeded: {data.pattern.fastestTempo} bpm</div>
+              <div>
+                <span role="img" aria-label="sweat">
+                  🥵
+                </span>{' '}
+                Maxium succeded: {data.pattern.fastestTempo} bpm
+              </div>
             )}
           </div>
           <TempoAcheivement min={60} max={130} current={110} />

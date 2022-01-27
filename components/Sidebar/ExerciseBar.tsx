@@ -10,7 +10,6 @@ import {
 } from 'lib/gql/exercise.gql'
 import { useSidebar } from 'lib/SidebarContext'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import {
   Check,
   ChevronRight,
@@ -52,7 +51,7 @@ const ExerciseBar = () => {
     renameExercise({
       variables: { id: values.id.toString(), name: values.name }
     }).catch((e) => {
-      console.log(e.networkError?.result?.errors || e.message)
+      console.error(e.networkError?.result?.errors || e.message)
     })
   }
 
@@ -99,9 +98,9 @@ const ExerciseBar = () => {
               'opacity-0': exerciseBarCollapsed
             }
           )}
+          key={exercise.id}
           onClick={() => {
             if (selectedExercise !== exercise.id) {
-              console.log(exercise)
               setSelectedExercise(exercise.id)
               setSelectedPattern(exercise.patterns?.[0]?.id)
             }

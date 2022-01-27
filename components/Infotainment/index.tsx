@@ -2,7 +2,7 @@ import { useInfotainment } from 'lib/InfotainmentContext'
 import { useTempo } from 'lib/TempoContext'
 import React from 'react'
 
-const index = () => {
+const Index = () => {
   const { infoText } = useInfotainment()
   const { timer } = useTempo()
   return (
@@ -13,4 +13,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

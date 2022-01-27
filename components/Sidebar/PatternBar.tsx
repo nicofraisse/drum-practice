@@ -3,12 +3,8 @@ import classNames from 'classnames'
 import ConditionalWrapper from 'components/ConditionalWrapper'
 import Field from 'components/Field'
 import Form from 'components/Form'
-import { GET_EXERCISE, GET_EXERCISES } from 'lib/gql/exercise.gql'
-import {
-  CREATE_PATTERN,
-  DELETE_PATTERN,
-  RENAME_PATTERN
-} from 'lib/gql/pattern.gql'
+import { GET_EXERCISE } from 'lib/gql/exercise.gql'
+import { CREATE_PATTERN, DELETE_PATTERN } from 'lib/gql/pattern.gql'
 import { useSidebar } from 'lib/SidebarContext'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,16 +14,11 @@ import { ReactSortable } from 'react-sortablejs'
 import { toast } from 'react-toastify'
 
 const PatternBar = () => {
-  const {
-    setSelectedPattern,
-    setSelectedExercise,
-    selectedExercise,
-    selectedPattern,
-    editMode
-  } = useSidebar()
+  const { setSelectedPattern, selectedExercise, selectedPattern, editMode } =
+    useSidebar()
   const [isCreating, setIsCreating] = useState(false)
-  const { push, query } = useRouter()
-  const { data, loading } = useQuery(GET_EXERCISE, {
+  const { push } = useRouter()
+  const { data } = useQuery(GET_EXERCISE, {
     variables: { id: selectedExercise?.toString() },
     skip: !selectedExercise
   })
@@ -37,13 +28,7 @@ const PatternBar = () => {
 
   useEffect(() => {
     if (data?.exercise?.patterns) {
-      setState(
-        data.exercise.patterns.map((p, id) => {
-          return {
-            ...p
-          }
-        })
-      )
+      setState(data.exercise.patterns)
     }
   }, [data])
 
@@ -57,14 +42,11 @@ const PatternBar = () => {
     ]
   })
 
-  const handlePrepareCreate = async (values) => {
+  const handlePrepareCreate = async () => {
     setIsCreating(true)
     setSelectedPattern(null)
   }
 
-  const [renamePattern] = useMutation(RENAME_PATTERN, {
-    refetchQueries: () => [{ query: GET_EXERCISES }]
-  })
   const [deletePattern] = useMutation(DELETE_PATTERN, {
     refetchQueries: () => [
       {
@@ -86,7 +68,7 @@ const PatternBar = () => {
         setIsCreating(false)
         push(`/patterns/${data?.createPattern?.id}/edit`)
       })
-      .catch((e) => console.log(e.networkError?.result?.errors || e.message))
+      .catch((e) => console.error(e.networkError?.result?.errors || e.message))
   }
 
   const handleDelete = (e, pattern) => {
@@ -106,7 +88,9 @@ const PatternBar = () => {
             setSelectedPattern(lastPatternId)
           }
         })
-        .catch((e) => console.log(e.networkError?.result?.errors || e.message))
+        .catch((e) =>
+          console.error(e.networkError?.result?.errors || e.message)
+        )
     }
   }
 

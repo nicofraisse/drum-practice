@@ -31,13 +31,6 @@ const Queries = objectType({
       type: 'Pattern',
       args: { id: nonNull(stringArg()) },
       resolve: (_, args) => {
-        console.log(
-          prisma.pattern.findUnique({
-            where: {
-              id: Number(args.id)
-            }
-          }).exercise
-        )
         return prisma.pattern.findUnique({
           where: {
             id: Number(args.id)

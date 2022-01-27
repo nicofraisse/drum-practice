@@ -1,5 +1,5 @@
 import Commands from 'components/Commands'
-import Metronome from 'components/Metronome'
+// import Metronome from 'components/Metronome'
 import Navbar from 'components/Navbar'
 import Sidebar from 'components/Sidebar'
 
