@@ -34,11 +34,13 @@ const SidebarProvider = ({ children }) => {
   })
 
   useEffect(() => {
+    if (query) {
+      setSelectedPattern(query.id)
+    }
     if (patternData) {
       if (!selectedExercise) {
         setSelectedExercise(patternData?.pattern.exercise.id)
       }
-      setSelectedPattern(query.id)
     }
   }, [query, patternData])
 

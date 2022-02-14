@@ -4,6 +4,7 @@ import RecordList from 'components/Record/List'
 import ScoreShow from 'components/Score/Show'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Show = ({ patternId }) => {
   const { query, push } = useRouter()
@@ -60,14 +61,21 @@ const Show = ({ patternId }) => {
               </div>
             )}
           </div>
-          <TempoAcheivement min={60} max={130} current={110} />
         </div>
         <div className="flex">
           <div className="my-10 mx-auto">
             <ScoreShow score={data.pattern.score} />
           </div>
         </div>
+        <div className="p-4">
+          <TempoAcheivement
+            min={data.pattern.startTempo}
+            max={data.pattern.goalTempo}
+            current={data.pattern.bestTempo || data.pattern.startTempo}
+          />
+        </div>
       </div>
+
       <div className="h-1/4">
         <RecordList patternId={data.pattern.id} />
       </div>

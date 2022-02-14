@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Slash } from 'react-feather'
 
 const ScoreBuilder = ({ onChange, initialValues }) => {
-  const NB_NOTES = 8
+  const [nbNotes, setNbNotes] = useState(initialValues?.nbNotes || 8)
   const ref = useRef()
   const [output, setOutput] = useState({})
   const [forceReset, setForceReset] = useState()
@@ -114,6 +114,18 @@ const ScoreBuilder = ({ onChange, initialValues }) => {
         >
           Clear
         </div>
+        <input
+          name="startTempo"
+          type="number"
+          className="w-16 ml-3 bg-black bg-opacity-30 p-2 text-white text-2xl"
+          value={nbNotes}
+          onChange={(e) => {
+            if (parseInt(e.target.value) > 0) {
+              setNbNotes(parseInt(e.target.value))
+              setOutput({ ...output, nbNotes: parseInt(e.target.value) })
+            }
+          }}
+        />
       </div>
       <div className="flex w-full">
         <div
@@ -193,9 +205,9 @@ const ScoreBuilder = ({ onChange, initialValues }) => {
                 {instrument.name}
               </div>
               <div className="flex flex-grow" ref={ref}>
-                {[...Array(NB_NOTES)].map((_, index) => (
+                {[...Array(nbNotes)].map((_, index) => (
                   <Note
-                    width={(600 - 100) / NB_NOTES}
+                    width={(600 - 100) / nbNotes}
                     number={index + 1}
                     key={index}
                     options={options}

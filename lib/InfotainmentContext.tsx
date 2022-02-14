@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react'
 const InfotainmentContext = createContext({})
 
 const InfotainmentProvider = ({ children }) => {
-  const [infoText, setInfoText] = useState('Welcome !!')
+  const [infoText, setInfoText] = useState('Time remaining: ')
   return (
     <InfotainmentContext.Provider
       value={{

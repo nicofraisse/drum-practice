@@ -2,7 +2,6 @@ import { useMutation } from '@apollo/client'
 import { ratings } from 'data/ratings'
 import { GET_PATTERN } from 'lib/gql/pattern.gql'
 import { CREATE_RECORD, GET_PATTERN_RECORDS } from 'lib/gql/record.gql'
-import { useModal } from 'lib/ModalContext'
 import { useTempo } from 'lib/TempoContext'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -15,7 +14,7 @@ const Rating = ({ data, handleRate }) => {
       onClick={() => handleRate(data.mark)}
     >
       <div className="flex items-center">
-        <div className="bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center text-xl">
+        <div className="bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center text-xl text-gray-900">
           {data.mark}
         </div>
         <div className="pl-3">
@@ -27,11 +26,10 @@ const Rating = ({ data, handleRate }) => {
   )
 }
 
-const Index = () => {
+const Index = ({ closeModal }) => {
   const { tempo } = useTempo()
   const { query } = useRouter()
   const patternId = query?.id
-  const { closeModal } = useModal()
 
   const [createRecord] = useMutation(CREATE_RECORD, {
     refetchQueries: () => [

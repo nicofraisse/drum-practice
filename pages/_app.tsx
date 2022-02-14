@@ -1,11 +1,9 @@
 import '../styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css'
-
 import { ApolloProvider } from '@apollo/client'
 import Layout from 'components/Layout'
 import apolloClient from 'lib/apolloClient'
 import InfotainmentProvider from 'lib/InfotainmentContext'
-import ModalProvider from 'lib/ModalContext'
 import SidebarProvider from 'lib/SidebarContext'
 import TempoProvider from 'lib/TempoContext'
 import type { AppProps } from 'next/app'
@@ -17,11 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SidebarProvider>
         <InfotainmentProvider>
           <TempoProvider>
-            <ModalProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ModalProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </TempoProvider>
         </InfotainmentProvider>
       </SidebarProvider>

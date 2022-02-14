@@ -1,7 +1,6 @@
 import React from 'react'
 
-const TempoAcheivement = ({ min, max, current }) => {
-  current = 90
+const TempoAcheivement = ({ min, max, current = min }) => {
   const widthPercent = current ? ((current - min) / (max - min)) * 100 : 0
 
   return (

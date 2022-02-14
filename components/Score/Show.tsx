@@ -21,6 +21,7 @@ const Show = ({ score: scoreString }) => {
               pattern={score[instrument.name]}
               instrument={instrument}
               isLast={index === usedInstruments.length - 1}
+              nbNotes={score.nbNotes}
             />
           )
         }
@@ -29,9 +30,7 @@ const Show = ({ score: scoreString }) => {
   )
 }
 
-const InstrumentRow = ({ pattern, instrument, isLast }) => {
-  const NB_NOTES = 8
-
+const InstrumentRow = ({ pattern, instrument, isLast, nbNotes }) => {
   return (
     <div
       className={classNames('flex', { 'border-jhghb border-gray-90': !isLast })}
@@ -40,18 +39,19 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
         <Image
           src={`/icons/${instrument.icon}`}
           alt={instrument.name}
-          width="60"
-          height="60"
+          width={nbNotes < 10 ? '60' : '50'}
+          height={nbNotes < 10 ? '60' : '50'}
         />
       </div>
       <div className="flex">
-        {[...Array(NB_NOTES)].map((_, index) => (
+        {[...Array(nbNotes)].map((_, index) => (
           <Note
             {...pattern[index]}
             instrument={instrument}
             presence={!!pattern[index]}
             index={index}
             key={index}
+            nbNotes={nbNotes}
           />
         ))}
       </div>
@@ -59,7 +59,16 @@ const InstrumentRow = ({ pattern, instrument, isLast }) => {
   )
 }
 
-const Note = ({ velocity, buzz, flam, instrument, presence, index, hand }) => {
+const Note = ({
+  velocity,
+  buzz,
+  flam,
+  instrument,
+  presence,
+  index,
+  hand,
+  nbNotes
+}) => {
   const velocityClass = (velocity) => {
     switch (velocity) {
       case 1:
@@ -92,12 +101,18 @@ const Note = ({ velocity, buzz, flam, instrument, presence, index, hand }) => {
     )
   }
 
+  const buzzClass = () => {}
+  const flamClass = () => {}
+
   return (
     <div
       className={classNames(
-        'w-20 h-20 flex items-center justify-center border-l border-l-gray-800 bg-black bg-opacity-20',
+        'flex items-center justify-center border-l border-l-gray-800 bg-black bg-opacity-20',
         {
-          'border-l-gray-500 border-l-2': index % 4 == 0
+          'border-l-gray-500 border-l-2': index % 4 == 0,
+          'w-20 h-20': nbNotes < 10,
+          'w-14 h-14': nbNotes >= 10 && nbNotes < 20,
+          'w-10 h-10': nbNotes >= 20
         }
       )}
     >

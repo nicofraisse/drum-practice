@@ -44,7 +44,6 @@ const PatternBar = () => {
 
   const handlePrepareCreate = async () => {
     setIsCreating(true)
-    setSelectedPattern(null)
   }
 
   const [deletePattern] = useMutation(DELETE_PATTERN, {

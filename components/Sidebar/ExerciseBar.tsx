@@ -10,6 +10,7 @@ import {
 } from 'lib/gql/exercise.gql'
 import { useSidebar } from 'lib/SidebarContext'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import {
   Check,
   ChevronRight,
@@ -25,6 +26,7 @@ const ExerciseBar = () => {
     selectedExercise,
     setSelectedExercise,
     setSelectedPattern,
+    selectedPattern,
     editMode,
     exerciseBarCollapsed,
     setExerciseBarCollapsed
@@ -75,6 +77,32 @@ const ExerciseBar = () => {
       setExerciseBarCollapsed(false)
     }
   }
+
+  const isSameExercise = (ex, pat) => {
+    if (
+      data?.exercises?.find((e) => e.id == ex).patterns.find((p) => p.id == pat)
+    ) {
+      return false
+    }
+    return true
+  }
+
+  useEffect(() => {
+    if (
+      data &&
+      selectedExercise &&
+      selectedPattern &&
+      isSameExercise(selectedExercise, selectedPattern)
+    ) {
+      const newSelected = data?.exercises?.find((e) => e.id == selectedExercise)
+        ?.patterns?.[0]?.id
+
+      setSelectedPattern(newSelected)
+      if (newSelected) {
+        push(`/patterns/${newSelected}`)
+      }
+    }
+  }, [data, selectedExercise, selectedPattern])
 
   return (
     <div

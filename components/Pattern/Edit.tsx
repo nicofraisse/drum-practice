@@ -32,7 +32,9 @@ const Edit = ({ patternId }) => {
     })
       .then(() => {
         toast.success('Saved!')
-        push(`/patterns/${patternId}`)
+        setTimeout(() => {
+          push(`/patterns/${patternId}`)
+        }, 500)
         setEditMode(false)
       })
       .catch((e) => {
@@ -82,7 +84,7 @@ const Edit = ({ patternId }) => {
                 Save
               </Button>
             </div>
-            <div onClick={() => console.log(values)}>Log values in console</div>
+            {/* <div onClick={() => console.log(values)}>Log values in console</div> */}
           </>
         )
       }}
